@@ -1,0 +1,171 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXFileReference section */
+		293224122D29BA6C005646A4 /* MetalBlas.metallib */ = {isa = PBXFileReference; explicitFileType = "archive.metal-library"; includeInIndex = 0; path = MetalBlas.metallib; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		293224142D29BA6C005646A4 /* MetalBlas */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = MetalBlas;
+			sourceTree = "<group>";
+		};
+/* End PBXFileSystemSynchronizedRootGroup section */
+
+/* Begin PBXGroup section */
+		2932240B2D29BA6C005646A4 = {
+			isa = PBXGroup;
+			children = (
+				293224142D29BA6C005646A4 /* MetalBlas */,
+				293224132D29BA6C005646A4 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		293224132D29BA6C005646A4 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				293224122D29BA6C005646A4 /* MetalBlas.metallib */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		293224112D29BA6C005646A4 /* MetalBlas */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 293224192D29BA6C005646A4 /* Build configuration list for PBXNativeTarget "MetalBlas" */;
+			buildPhases = (
+				293224102D29BA6C005646A4 /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				293224142D29BA6C005646A4 /* MetalBlas */,
+			);
+			name = MetalBlas;
+			packageProductDependencies = (
+			);
+			productName = MetalBlas;
+			productReference = 293224122D29BA6C005646A4 /* MetalBlas.metallib */;
+			productType = "com.apple.product-type.metal-library";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		2932240C2D29BA6C005646A4 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastUpgradeCheck = 1620;
+				TargetAttributes = {
+					293224112D29BA6C005646A4 = {
+						CreatedOnToolsVersion = 16.2;
+					};
+				};
+			};
+			buildConfigurationList = 2932240F2D29BA6C005646A4 /* Build configuration list for PBXProject "MetalBlas" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 2932240B2D29BA6C005646A4;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 293224132D29BA6C005646A4 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				293224112D29BA6C005646A4 /* MetalBlas */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		293224102D29BA6C005646A4 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		293224172D29BA6C005646A4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				MACOSX_DEPLOYMENT_TARGET = 15.1;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		293224182D29BA6C005646A4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				MACOSX_DEPLOYMENT_TARGET = 15.1;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		2932241A2D29BA6C005646A4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 7K2G3ZSV8T;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				VERSIONING_SYSTEM = "";
+			};
+			name = Debug;
+		};
+		2932241B2D29BA6C005646A4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 7K2G3ZSV8T;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				VERSIONING_SYSTEM = "";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		2932240F2D29BA6C005646A4 /* Build configuration list for PBXProject "MetalBlas" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				293224172D29BA6C005646A4 /* Debug */,
+				293224182D29BA6C005646A4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		293224192D29BA6C005646A4 /* Build configuration list for PBXNativeTarget "MetalBlas" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2932241A2D29BA6C005646A4 /* Debug */,
+				2932241B2D29BA6C005646A4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 2932240C2D29BA6C005646A4 /* Project object */;
+}
