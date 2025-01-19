@@ -80,6 +80,8 @@ public class MetalBlas
                 "scopy": try device.makeComputePipelineState(function: self.library.makeFunction(name: "metalScopy")!),
                 "hdot": try device.makeComputePipelineState(function: self.library.makeFunction(name: "metalHdot")!),
                 "sdot": try device.makeComputePipelineState(function: self.library.makeFunction(name: "metalSdot")!),
+                "hnrm2": try device.makeComputePipelineState(function: self.library.makeFunction(name: "metalHnrm2")!),
+                "snrm2": try device.makeComputePipelineState(function: self.library.makeFunction(name: "metalSnrm2")!),
                 "hscal": try device.makeComputePipelineState(function: self.library.makeFunction(name: "metalHscal")!),
                 "sscal": try device.makeComputePipelineState(function: self.library.makeFunction(name: "metalSscal")!),
                 "hswap": try device.makeComputePipelineState(function: self.library.makeFunction(name: "metalHswap")!),
@@ -87,7 +89,9 @@ public class MetalBlas
                 "hgemm": try device.makeComputePipelineState(function: self.library.makeFunction(name: "metalHgemm")!),
                 "sgemm": try device.makeComputePipelineState(function: self.library.makeFunction(name: "metalSgemm")!),
                 "sreduce": try device.makeComputePipelineState(function: self.library.makeFunction(name: "metalsReduce")!),
-                "hreduce": try device.makeComputePipelineState(function: self.library.makeFunction(name: "metalhReduce")!)
+                "hreduce": try device.makeComputePipelineState(function: self.library.makeFunction(name: "metalhReduce")!),
+                "sreducesq": try device.makeComputePipelineState(function: self.library.makeFunction(name: "metalsReduceSq")!),
+                "hreducesq": try device.makeComputePipelineState(function: self.library.makeFunction(name: "metalhReduceSq")!)
                 
             ]
         }

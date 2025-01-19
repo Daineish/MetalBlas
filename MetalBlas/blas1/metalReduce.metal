@@ -9,7 +9,7 @@
 using namespace metal;
 
 
-template <typename T>
+template <typename T, template <typename> class FINALIZE>
 kernel void metalsthreadgroupReduce(const device int& N [[buffer(0)]],
                                     device T* w[[buffer(1)]],
                               device T* res[[buffer(2)]],
@@ -37,11 +37,56 @@ kernel void metalsthreadgroupReduce(const device int& N [[buffer(0)]],
     }
 
     if(tid == 0)
-        res[0] = s_partial[0];
+        res[0] = FINALIZE<T>::call(s_partial[0]);
 }
 
+template <typename T>
+kernel void mtlSqrt(device T* res [[buffer(0)]])
+{
+    return sqrt(res);
+}
+
+kernel void myHelper()
+{
+    return;
+}
+
+template <typename T>
+struct FinalizeSqrt
+{
+    static T call(T a)
+    {
+        return sqrt(a);
+    }
+};
+
+template <typename T>
+struct FinalizeNop
+{
+    static T call(T a)
+    {
+        return a;
+    }
+};
+
+template [[host_name("metalsReduceSq")]]
+kernel void metalsthreadgroupReduce<float, FinalizeSqrt>(const device int& N [[buffer(0)]],
+                                           device float* w[[buffer(1)]],
+                                           device float* res[[buffer(2)]],
+                                           uint gid [[thread_position_in_grid]],
+                                           uint tid [[thread_position_in_threadgroup]],
+                                           uint tgsize [[threads_per_threadgroup]]);
+
+template [[host_name("metalhReduceSq")]]
+kernel void metalsthreadgroupReduce<half, FinalizeSqrt>(const device int& N [[buffer(0)]],
+                                           device half* w[[buffer(1)]],
+                                           device half* res[[buffer(2)]],
+                                           uint gid [[thread_position_in_grid]],
+                                           uint tid [[thread_position_in_threadgroup]],
+                                           uint tgsize [[threads_per_threadgroup]]);
+
 template [[host_name("metalsReduce")]]
-kernel void metalsthreadgroupReduce<float>(const device int& N [[buffer(0)]],
+kernel void metalsthreadgroupReduce<float, FinalizeNop>(const device int& N [[buffer(0)]],
                                            device float* w[[buffer(1)]],
                                            device float* res[[buffer(2)]],
                                            uint gid [[thread_position_in_grid]],
@@ -49,7 +94,7 @@ kernel void metalsthreadgroupReduce<float>(const device int& N [[buffer(0)]],
                                            uint tgsize [[threads_per_threadgroup]]);
 
 template [[host_name("metalhReduce")]]
-kernel void metalsthreadgroupReduce<half>(const device int& N [[buffer(0)]],
+kernel void metalsthreadgroupReduce<half, FinalizeNop>(const device int& N [[buffer(0)]],
                                            device half* w[[buffer(1)]],
                                            device half* res[[buffer(2)]],
                                            uint gid [[thread_position_in_grid]],

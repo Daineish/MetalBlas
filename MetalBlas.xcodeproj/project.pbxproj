@@ -46,6 +46,8 @@
 				blas1/metalCopy.swift,
 				blas1/metalDot.metal,
 				blas1/metalDot.swift,
+				blas1/metalNrm2.metal,
+				blas1/metalNrm2.swift,
 				blas1/metalReduce.h,
 				blas1/metalReduce.metal,
 				blas1/metalScal.metal,

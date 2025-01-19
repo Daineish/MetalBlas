@@ -31,6 +31,11 @@ func getDotGflopCount(N: Int) -> Double
     return 2.0 * Double(N) / 1e9
 }
 
+func getNrm2GflopCount(N: Int) -> Double
+{
+    return 2.0 * Double(N) / 1e9
+}
+
 func getSwapGbyteCount(N: Int) -> Double
 {
     return 2.0 * Double(N) / 1e9
