@@ -22,20 +22,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		293224122D29BA6C005646A4 /* MetalBlas.metallib */ = {isa = PBXFileReference; explicitFileType = "archive.metal-library"; includeInIndex = 0; path = MetalBlas.metallib; sourceTree = BUILT_PRODUCTS_DIR; };
 		293224272D29D004005646A4 /* MetalBlasFramework.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MetalBlasFramework.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		293224302D29D004005646A4 /* MetalBlasFrameworkTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MetalBlasFrameworkTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		293224C02D2FA18B005646A4 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		293224212D29CF38005646A4 /* Exceptions for "MetalBlas" folder in "MetalBlas" target */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				MetalBlas.metal,
-			);
-			target = 293224112D29BA6C005646A4 /* MetalBlas */;
-		};
 		293224382D29D004005646A4 /* Exceptions for "MetalBlasFramework" folder in "MetalBlasFramework" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			publicHeaders = (
@@ -46,34 +38,29 @@
 		293224532D29D44C005646A4 /* Exceptions for "MetalBlas" folder in "MetalBlasFramework" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				metalAsum.swift,
-				metalAxpy.swift,
+				blas1/metalAsum.metal,
+				blas1/metalAsum.swift,
+				blas1/metalAxpy.metal,
+				blas1/metalAxpy.swift,
+				blas1/metalCopy.metal,
+				blas1/metalCopy.swift,
+				blas1/metalReduce.h,
+				blas1/metalReduce.metal,
+				blas1/metalScal.metal,
+				blas1/metalScal.swift,
+				blas3/metalGemm.metal,
+				blas3/metalGemm.swift,
 				MetalBlas.metal,
 				MetalBlas.swift,
-				metalCopy.swift,
-				metalGemm.swift,
-				metalScal.swift,
 			);
 			target = 293224262D29D004005646A4 /* MetalBlasFramework */;
 		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
-/* Begin PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet section */
-		293224202D29CF28005646A4 /* Exceptions for "MetalBlas" folder in "Compile Sources" phase from "MetalBlas" target */ = {
-			isa = PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet;
-			buildPhase = 293224102D29BA6C005646A4 /* Sources */;
-			membershipExceptions = (
-				MetalBlas.swift,
-			);
-		};
-/* End PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet section */
-
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		293224142D29BA6C005646A4 /* MetalBlas */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
-				293224212D29CF38005646A4 /* Exceptions for "MetalBlas" folder in "MetalBlas" target */,
-				293224202D29CF28005646A4 /* Exceptions for "MetalBlas" folder in "Compile Sources" phase from "MetalBlas" target */,
 				293224532D29D44C005646A4 /* Exceptions for "MetalBlas" folder in "MetalBlasFramework" target */,
 			);
 			path = MetalBlas;
@@ -128,7 +115,6 @@
 		293224132D29BA6C005646A4 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				293224122D29BA6C005646A4 /* MetalBlas.metallib */,
 				293224272D29D004005646A4 /* MetalBlasFramework.framework */,
 				293224302D29D004005646A4 /* MetalBlasFrameworkTests.xctest */,
 			);
@@ -156,26 +142,6 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		293224112D29BA6C005646A4 /* MetalBlas */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 293224192D29BA6C005646A4 /* Build configuration list for PBXNativeTarget "MetalBlas" */;
-			buildPhases = (
-				293224102D29BA6C005646A4 /* Sources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			fileSystemSynchronizedGroups = (
-				293224142D29BA6C005646A4 /* MetalBlas */,
-			);
-			name = MetalBlas;
-			packageProductDependencies = (
-			);
-			productName = MetalBlas;
-			productReference = 293224122D29BA6C005646A4 /* MetalBlas.metallib */;
-			productType = "com.apple.product-type.metal-library";
-		};
 		293224262D29D004005646A4 /* MetalBlasFramework */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 293224392D29D004005646A4 /* Build configuration list for PBXNativeTarget "MetalBlasFramework" */;
@@ -232,9 +198,6 @@
 				LastSwiftUpdateCheck = 1620;
 				LastUpgradeCheck = 1620;
 				TargetAttributes = {
-					293224112D29BA6C005646A4 = {
-						CreatedOnToolsVersion = 16.2;
-					};
 					293224262D29D004005646A4 = {
 						CreatedOnToolsVersion = 16.2;
 					};
@@ -257,7 +220,6 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				293224112D29BA6C005646A4 /* MetalBlas */,
 				293224262D29D004005646A4 /* MetalBlasFramework */,
 				2932242F2D29D004005646A4 /* MetalBlasFrameworkTests */,
 			);
@@ -282,13 +244,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		293224102D29BA6C005646A4 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		293224232D29D004005646A4 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -333,28 +288,6 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = macosx;
-			};
-			name = Release;
-		};
-		2932241A2D29BA6C005646A4 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 7K2G3ZSV8T;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 6.0;
-				VERSIONING_SYSTEM = "";
-			};
-			name = Debug;
-		};
-		2932241B2D29BA6C005646A4 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 7K2G3ZSV8T;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 6.0;
-				VERSIONING_SYSTEM = "";
 			};
 			name = Release;
 		};
@@ -661,15 +594,6 @@
 			buildConfigurations = (
 				293224172D29BA6C005646A4 /* Debug */,
 				293224182D29BA6C005646A4 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		293224192D29BA6C005646A4 /* Build configuration list for PBXNativeTarget "MetalBlas" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				2932241A2D29BA6C005646A4 /* Debug */,
-				2932241B2D29BA6C005646A4 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
