@@ -22,6 +22,7 @@ enum funcType
     case copy
     case gemv
     case gemm
+    case asum
 }
 
 public enum TransposeType

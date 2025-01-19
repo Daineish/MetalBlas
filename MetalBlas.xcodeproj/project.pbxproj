@@ -46,6 +46,7 @@
 		293224532D29D44C005646A4 /* Exceptions for "MetalBlas" folder in "MetalBlasFramework" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
+				metalAsum.swift,
 				metalAxpy.swift,
 				MetalBlas.metal,
 				MetalBlas.swift,

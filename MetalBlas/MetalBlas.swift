@@ -72,13 +72,16 @@ public class MetalBlas
         do
         {
             pipelineStates = [
-                
+                "hasum": try device.makeComputePipelineState(function: self.library.makeFunction(name: "metalHasum")!),
+                "sasum": try device.makeComputePipelineState(function: self.library.makeFunction(name: "metalSasum")!),
                 "haxpy": try device.makeComputePipelineState(function: self.library.makeFunction(name: "metalHaxpy")!),
                 "saxpy": try device.makeComputePipelineState(function: self.library.makeFunction(name: "metalSaxpy")!),
                 "hscal": try device.makeComputePipelineState(function: self.library.makeFunction(name: "metalHscal")!),
                 "sscal": try device.makeComputePipelineState(function: self.library.makeFunction(name: "metalSscal")!),
                 "hgemm": try device.makeComputePipelineState(function: self.library.makeFunction(name: "metalHgemm")!),
-                "sgemm": try device.makeComputePipelineState(function: self.library.makeFunction(name: "metalSgemm")!)
+                "sgemm": try device.makeComputePipelineState(function: self.library.makeFunction(name: "metalSgemm")!),
+                "sreduce": try device.makeComputePipelineState(function: self.library.makeFunction(name: "metalsReduce")!),
+                "hreduce": try device.makeComputePipelineState(function: self.library.makeFunction(name: "metalhReduce")!)
                 
             ]
         }

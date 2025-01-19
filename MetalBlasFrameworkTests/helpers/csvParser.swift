@@ -81,6 +81,10 @@ class csvParser
         {
             return funcType.gemm
         }
+        else if(s == "asum")
+        {
+            return funcType.asum
+        }
         return funcType.axpy
     }
 
