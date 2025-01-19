@@ -1,8 +1,8 @@
 //
-//  metalAsum.metal
+//  metalDot.metal
 //  MetalBlas
 //
-//  Created by Daine McNiven on 2025-01-18.
+//  Created by Daine McNiven on 2025-01-19.
 //
 
 #include <metal_stdlib>
@@ -10,12 +10,14 @@
 using namespace metal;
 
 template <typename T, int NB>
-kernel void metalAsumWork(const device int& N [[buffer(0)]],
+kernel void metalDotWork(const device int& N [[buffer(0)]],
                        device T* x[[buffer(1)]],
                        const device int& incx[[buffer(2)]],
-                       device T* res[[buffer(3)]],
-                       device T* workspace[[buffer(4)]],
-                           uint nt [[threads_per_grid]],
+                       device T* y[[buffer(3)]],
+                       const device int& incy[[buffer(4)]],
+                       device T* res[[buffer(5)]],
+                       device T* workspace[[buffer(6)]],
+                       uint nt [[threads_per_grid]],
                        uint gid [[thread_position_in_grid]],
                        uint tid [[thread_position_in_threadgroup]],
                        uint tgid [[threadgroup_position_in_grid]],
@@ -29,18 +31,24 @@ kernel void metalAsumWork(const device int& N [[buffer(0)]],
 
     threadgroup float s_partial[NB];
 
-    float rvals[32];
+    float xvals[32];
+    float yvals[32];
     for(int i = 0; i < 32; i++)
     {
         if(gid + i * nt < Nu)
-            rvals[i] = abs(x[(gid + i * nt) * incx]);
+        {
+            xvals[i] = x[(gid + i * nt) * incx];
+            yvals[i] = y[(gid + i * nt) * incy];
+        }
         else
-            rvals[i] = 0;
+        {
+            xvals[i] = yvals[i] = 0;
+        }
     }
 
     for(int i = 0; i < 32; i++)
     {
-        s_partial[tid] += rvals[i];
+        s_partial[tid] += (xvals[i] * yvals[i]);
     }
 
     threadgroup_barrier(mem_flags::mem_threadgroup);
@@ -56,12 +64,14 @@ kernel void metalAsumWork(const device int& N [[buffer(0)]],
         workspace[tgid] = s_partial[0];
 }
 
-template [[host_name("metalSasum")]]
-kernel void metalAsumWork<float, 1024>(const device int& N [[buffer(0)]],
+template [[host_name("metalSdot")]]
+kernel void metalDotWork<float, 1024>(const device int& N [[buffer(0)]],
                        device float* x[[buffer(1)]],
                        const device int& incx[[buffer(2)]],
-                       device float* res[[buffer(3)]],
-                       device float* workspace[[buffer(4)]],
+                       device float* y[[buffer(3)]],
+                       const device int& incy[[buffer(4)]],
+                       device float* res[[buffer(5)]],
+                       device float* workspace[[buffer(6)]],
                        uint nt [[threads_per_grid]],
                        uint gid [[thread_position_in_grid]],
                        uint tid [[thread_position_in_threadgroup]],
@@ -69,12 +79,14 @@ kernel void metalAsumWork<float, 1024>(const device int& N [[buffer(0)]],
                        uint gsize [[threadgroups_per_grid]],
                        uint tgsize [[threads_per_threadgroup]]);
 
-template [[host_name("metalHasum")]]
-kernel void metalAsumWork<half, 1024>(const device int& N [[buffer(0)]],
+template [[host_name("metalHdot")]]
+kernel void metalDotWork<half, 1024>(const device int& N [[buffer(0)]],
                        device half* x[[buffer(1)]],
                        const device int& incx[[buffer(2)]],
-                       device half* res[[buffer(3)]],
-                       device half* workspace[[buffer(4)]],
+                       device half* y[[buffer(3)]],
+                       const device int& incy[[buffer(4)]],
+                       device half* res[[buffer(5)]],
+                       device half* workspace[[buffer(6)]],
                        uint nt [[threads_per_grid]],
                        uint gid [[thread_position_in_grid]],
                        uint tid [[thread_position_in_threadgroup]],

@@ -23,7 +23,7 @@ kernel void metalsthreadgroupReduce(const device int& N [[buffer(0)]],
 
     threadgroup T s_partial[1024];
     if(tid < Nu)
-        s_partial[tid] = abs(w[tid]);
+        s_partial[tid] = w[tid];
     else
         s_partial[tid] = 0;
     threadgroup_barrier(mem_flags::mem_threadgroup);
