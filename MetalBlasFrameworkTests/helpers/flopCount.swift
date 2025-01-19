@@ -21,6 +21,11 @@ func getAsumGflopCount(N: Int) -> Double
     return 1.0 * Double(N) / 1e9
 }
 
+func getCopyGbyteCount(N: Int) -> Double
+{
+    return 1.0 * Double(N) / 1e9
+}
+
 func getGemvGflopCount(transA: TransposeType, M: Int, N: Int) -> Double
 {
     // Including scalar multiplications

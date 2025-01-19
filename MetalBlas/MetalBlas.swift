@@ -76,6 +76,8 @@ public class MetalBlas
                 "sasum": try device.makeComputePipelineState(function: self.library.makeFunction(name: "metalSasum")!),
                 "haxpy": try device.makeComputePipelineState(function: self.library.makeFunction(name: "metalHaxpy")!),
                 "saxpy": try device.makeComputePipelineState(function: self.library.makeFunction(name: "metalSaxpy")!),
+                "hcopy": try device.makeComputePipelineState(function: self.library.makeFunction(name: "metalHcopy")!),
+                "scopy": try device.makeComputePipelineState(function: self.library.makeFunction(name: "metalScopy")!),
                 "hscal": try device.makeComputePipelineState(function: self.library.makeFunction(name: "metalHscal")!),
                 "sscal": try device.makeComputePipelineState(function: self.library.makeFunction(name: "metalSscal")!),
                 "hgemm": try device.makeComputePipelineState(function: self.library.makeFunction(name: "metalHgemm")!),

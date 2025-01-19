@@ -110,6 +110,20 @@ kernel void metalSscal(const device int& N [[buffer(0)]],
     x[gid * incx] *= alpha;
 }
 
+template <typename T>
+kernel void metalCopyWork(const device int& N [[buffer(0)]],
+                          const device T* x[[buffer(1)]],
+                          const device int& incx[[buffer(2)]],
+                          device T* y[[buffer(3)]],
+                          const device int& incy[[buffer(4)]],
+                          uint gid [[thread_position_in_grid]])
+{
+    if(gid >= uint(N))
+        return;
+
+    y[gid * incy] = x[gid * incx];
+}
+
 template <typename T, int NB>
 kernel void metalAsumWork(const device int& N [[buffer(0)]],
                        device T* x[[buffer(1)]],
@@ -213,6 +227,22 @@ kernel void metalAsumWork<half, 1024>(const device int& N [[buffer(0)]],
                        uint tgid [[threadgroup_position_in_grid]],
                        uint gsize [[threadgroups_per_grid]],
                        uint tgsize [[threads_per_threadgroup]]);
+
+template [[host_name("metalHcopy")]]
+kernel void metalCopyWork<half>(const device int& N [[buffer(0)]],
+                          const device half* x[[buffer(1)]],
+                          const device int& incx[[buffer(2)]],
+                          device half* y[[buffer(3)]],
+                          const device int& incy[[buffer(4)]],
+                                uint gid [[thread_position_in_grid]]);
+
+template [[host_name("metalScopy")]]
+kernel void metalCopyWork<float>(const device int& N [[buffer(0)]],
+                          const device float* x[[buffer(1)]],
+                          const device int& incx[[buffer(2)]],
+                          device float* y[[buffer(3)]],
+                          const device int& incy[[buffer(4)]],
+                                uint gid [[thread_position_in_grid]]);
 
 template [[host_name("metalsReduce")]]
 kernel void metalsthreadgroupReduce<float>(const device int& N [[buffer(0)]],

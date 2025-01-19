@@ -50,6 +50,7 @@
 				metalAxpy.swift,
 				MetalBlas.metal,
 				MetalBlas.swift,
+				metalCopy.swift,
 				metalGemm.swift,
 				metalScal.swift,
 			);
