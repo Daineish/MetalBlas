@@ -82,6 +82,8 @@ public class MetalBlas
                 "sdot": try device.makeComputePipelineState(function: self.library.makeFunction(name: "metalSdot")!),
                 "hscal": try device.makeComputePipelineState(function: self.library.makeFunction(name: "metalHscal")!),
                 "sscal": try device.makeComputePipelineState(function: self.library.makeFunction(name: "metalSscal")!),
+                "hswap": try device.makeComputePipelineState(function: self.library.makeFunction(name: "metalHswap")!),
+                "sswap": try device.makeComputePipelineState(function: self.library.makeFunction(name: "metalSswap")!),
                 "hgemm": try device.makeComputePipelineState(function: self.library.makeFunction(name: "metalHgemm")!),
                 "sgemm": try device.makeComputePipelineState(function: self.library.makeFunction(name: "metalSgemm")!),
                 "sreduce": try device.makeComputePipelineState(function: self.library.makeFunction(name: "metalsReduce")!),
