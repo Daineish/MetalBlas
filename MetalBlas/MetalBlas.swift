@@ -80,6 +80,10 @@ public class MetalBlas
                 "scopy": try device.makeComputePipelineState(function: self.library.makeFunction(name: "metalScopy")!),
                 "hdot": try device.makeComputePipelineState(function: self.library.makeFunction(name: "metalHdot")!),
                 "sdot": try device.makeComputePipelineState(function: self.library.makeFunction(name: "metalSdot")!),
+//                "ihamin": try device.makeComputePipelineState(function: self.library.makeFunction(name: "metalIhamin")!),
+//                "isamin": try device.makeComputePipelineState(function: self.library.makeFunction(name: "metalIsamin")!),
+                "ihamax": try device.makeComputePipelineState(function: self.library.makeFunction(name: "metalIhamax")!),
+                "isamax": try device.makeComputePipelineState(function: self.library.makeFunction(name: "metalIsamax")!),
                 "hnrm2": try device.makeComputePipelineState(function: self.library.makeFunction(name: "metalHnrm2")!),
                 "snrm2": try device.makeComputePipelineState(function: self.library.makeFunction(name: "metalSnrm2")!),
                 "hscal": try device.makeComputePipelineState(function: self.library.makeFunction(name: "metalHscal")!),
@@ -90,6 +94,10 @@ public class MetalBlas
                 "sgemm": try device.makeComputePipelineState(function: self.library.makeFunction(name: "metalSgemm")!),
                 "sreduce": try device.makeComputePipelineState(function: self.library.makeFunction(name: "metalsReduce")!),
                 "hreduce": try device.makeComputePipelineState(function: self.library.makeFunction(name: "metalhReduce")!),
+                "sreduceMax": try device.makeComputePipelineState(function: self.library.makeFunction(name: "metalsReduceMax")!),
+                "hreduceMax": try device.makeComputePipelineState(function: self.library.makeFunction(name: "metalhReduceMax")!),
+                "sreduceMin": try device.makeComputePipelineState(function: self.library.makeFunction(name: "metalsReduceMin")!),
+                "hreduceMin": try device.makeComputePipelineState(function: self.library.makeFunction(name: "metalhReduceMin")!),
                 "sreducesq": try device.makeComputePipelineState(function: self.library.makeFunction(name: "metalsReduceSq")!),
                 "hreducesq": try device.makeComputePipelineState(function: self.library.makeFunction(name: "metalhReduceSq")!)
                 
@@ -110,12 +118,12 @@ public class MetalBlas
         return library.makeFunction(name: name)
     }
 
-    public func getDeviceBuffer<T: BinaryFloatingPoint>(matA: [T], M: Int, _ ops: MTLResourceOptions) -> MTLBuffer?
+    public func getDeviceBuffer<T: Numeric>(matA: [T], M: Int, _ ops: MTLResourceOptions) -> MTLBuffer?
     {
         device.makeBuffer(bytes: matA, length: matA.count * MemoryLayout<T>.stride, options: ops)
     }
 
-    public func copyBufToArray<T: BinaryFloatingPoint>(_ bufA: MTLBuffer, _ matA: inout [T])
+    public func copyBufToArray<T: Numeric>(_ bufA: MTLBuffer, _ matA: inout [T])
     {
         // Copy the data into the array
         let size = bufA.length / MemoryLayout<T>.stride

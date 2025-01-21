@@ -16,6 +16,16 @@ func getScalGflopCount(N: Int) -> Double
     return 1.0 * Double(N) / 1e9
 }
 
+func getAmaxGflopCount(N: Int) -> Double
+{
+    return 1.0 * Double(N) / 1e9
+}
+
+func getAminGflopCount(N: Int) -> Double
+{
+    return getAmaxGflopCount(N: N)
+}
+
 func getAsumGflopCount(N: Int) -> Double
 {
     return 1.0 * Double(N) / 1e9

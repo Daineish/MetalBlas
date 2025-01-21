@@ -20,7 +20,7 @@ public func cblasTrans(transA: TransposeType) -> CBLAS_TRANSPOSE
     return CblasConjTrans
 }
 
-public func printIfNotEqual<T: BinaryFloatingPoint>(_ outMetal: [ T ], _ outRef: [ T ]) -> Bool
+public func printIfNotEqual<T: Numeric>(_ outMetal: [ T ], _ outRef: [ T ]) -> Bool
 {
     if outMetal.count != outRef.count
     {
@@ -40,7 +40,7 @@ public func printIfNotEqual<T: BinaryFloatingPoint>(_ outMetal: [ T ], _ outRef:
     return true
 }
 
-public func printIfNotEqual<T: BinaryFloatingPoint>(_ outMetal: T, _ outRef: T) -> Bool
+public func printIfNotEqual<T: Numeric>(_ outMetal: T, _ outRef: T) -> Bool
 {
     if outMetal != outRef
     {
