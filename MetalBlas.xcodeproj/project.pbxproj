@@ -40,6 +40,8 @@
 			membershipExceptions = (
 				blas1/metalAmax.metal,
 				blas1/metalAmax.swift,
+				blas1/metalAmin.metal,
+				blas1/metalAmin.swift,
 				blas1/metalAsum.metal,
 				blas1/metalAsum.swift,
 				blas1/metalAxpy.metal,

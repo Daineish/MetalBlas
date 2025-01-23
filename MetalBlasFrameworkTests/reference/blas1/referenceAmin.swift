@@ -13,13 +13,13 @@ public func refAmin<T: BinaryFloatingPoint>(_ N: Int, _ X: [T], _ incx: Int) -> 
         return -1
     }
 
-    var minVal = X[0]
+    var minVal = abs(X[0])
     var minIdx = 0
     for i in 1...N - 1
     {
-        if X[i] < minVal
+        if abs(X[i]) < minVal
         {
-            minVal = X[i]
+            minVal = abs(X[i])
             minIdx = i
         }
     }
