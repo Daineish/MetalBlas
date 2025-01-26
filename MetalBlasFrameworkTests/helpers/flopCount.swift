@@ -51,6 +51,22 @@ func getRotGflopCount(N: Int) -> Double
     return 6.0 * Double(N) / 1e9
 }
 
+func getRotmGflopCount(N: Int, flag: Float) -> Double
+{
+    if flag == -2.0
+    {
+        return 0
+    }
+    else if flag < 0
+    {
+        return 6.0 * Double(N) / 1e9
+    }
+    else
+    {
+        return 4.0 * Double(N) / 1e9
+    }
+}
+
 func getSwapGbyteCount(N: Int) -> Double
 {
     return 2.0 * Double(N) / 1e9

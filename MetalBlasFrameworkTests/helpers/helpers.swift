@@ -121,3 +121,13 @@ public func initRandom(_ arr: inout [Float16], _ size: Int, _ range: ClosedRange
         arr.append(neg ? -val : val)
     }
 }
+
+public func initRandom(_ arr: inout [Int], _ size: Int, _ range: ClosedRange<Int> = (0...10))
+{
+    for _ in 0...size - 1
+    {
+        let neg = Bool.random()
+        let val = Int.random(in: range)
+        arr.append(neg ? -val : val)
+    }
+}
