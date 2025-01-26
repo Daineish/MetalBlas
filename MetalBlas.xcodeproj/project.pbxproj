@@ -54,6 +54,8 @@
 				blas1/metalNrm2.swift,
 				blas1/metalReduce.h,
 				blas1/metalReduce.metal,
+				blas1/metalRot.metal,
+				blas1/metalRot.swift,
 				blas1/metalScal.metal,
 				blas1/metalScal.swift,
 				blas1/metalSwap.metal,
