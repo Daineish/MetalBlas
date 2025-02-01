@@ -90,6 +90,8 @@ public class MetalBlas
                 "srot": try device.makeComputePipelineState(function: self.library.makeFunction(name: "metalSrot")!),
                 "hrotm": try device.makeComputePipelineState(function: self.library.makeFunction(name: "metalHrotm")!),
                 "srotm": try device.makeComputePipelineState(function: self.library.makeFunction(name: "metalSrotm")!),
+                "hrotmg": try device.makeComputePipelineState(function: self.library.makeFunction(name: "metalHrotmg")!),
+                "srotmg": try device.makeComputePipelineState(function: self.library.makeFunction(name: "metalSrotmg")!),
                 "hrotg": try device.makeComputePipelineState(function: self.library.makeFunction(name: "metalHrotg")!),
                 "srotg": try device.makeComputePipelineState(function: self.library.makeFunction(name: "metalSrotg")!),
                 "hscal": try device.makeComputePipelineState(function: self.library.makeFunction(name: "metalHscal")!),

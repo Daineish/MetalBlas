@@ -20,7 +20,7 @@ public func cblasTrans(transA: TransposeType) -> CBLAS_TRANSPOSE
     return CblasConjTrans
 }
 
-public func printIfNotEqual<T: Numeric>(_ outMetal: [ T ], _ outRef: [ T ]) -> Bool
+public func printIfNotEqual<T: Numeric>(_ outMetal: [ T ], _ outRef: [ T ], _ pr: Bool = true, _ prNote: String = "") -> Bool
 {
     if outMetal.count != outRef.count
     {
@@ -32,7 +32,10 @@ public func printIfNotEqual<T: Numeric>(_ outMetal: [ T ], _ outRef: [ T ]) -> B
     {
         if outMetal[i] != outRef[i]
         {
-            print("Error: ref[", i, " ] = ", outRef[i], "; got out[", i, "] = ", outMetal[i])
+            if pr
+            {
+                print(prNote, "Error: ref[", i, " ] = ", outRef[i], "; got out[", i, "] = ", outMetal[i])
+            }
             return false
         }
     }
@@ -40,17 +43,20 @@ public func printIfNotEqual<T: Numeric>(_ outMetal: [ T ], _ outRef: [ T ]) -> B
     return true
 }
 
-public func printIfNotEqual<T: Numeric>(_ outMetal: T, _ outRef: T) -> Bool
+public func printIfNotEqual<T: Numeric>(_ outMetal: T, _ outRef: T, _ pr: Bool = true, _ prNote: String = "") -> Bool
 {
     if outMetal != outRef
     {
-        print("Error: ref = ", outRef, "; got out = ", outMetal)
+        if pr
+        {
+            print(prNote, "Error: ref = ", outRef, "; got out = ", outMetal)
+        }
         return false
     }
     return true
 }
 
-public func printIfNotNear<T: BinaryFloatingPoint>(_ outMetal: [ T ], _ outRef: [ T ], _ N: Int) -> Bool
+public func printIfNotNear<T: BinaryFloatingPoint>(_ outMetal: [ T ], _ outRef: [ T ], _ N: Int, _ pr: Bool = true, _ prNote: String = "") -> Bool
 {
     if outMetal.count != outRef.count
     {
@@ -69,7 +75,10 @@ public func printIfNotNear<T: BinaryFloatingPoint>(_ outMetal: [ T ], _ outRef: 
         
         if !(rg ~= outMeti)
         {
-            print("Error: ref[", i, " ] = ", outRefi, "; got out[", i, "] = ", outMeti)
+            if pr
+            {
+                print(prNote, "Error: ref[", i, " ] = ", outRefi, "; got out[", i, "] = ", outMeti)
+            }
             return false
         }
     }
@@ -77,7 +86,7 @@ public func printIfNotNear<T: BinaryFloatingPoint>(_ outMetal: [ T ], _ outRef: 
     return true
 }
 
-public func printIfNotNear<T: BinaryFloatingPoint>(_ outMetal: T, _ outRef: T, _ N : Int) -> Bool
+public func printIfNotNear<T: BinaryFloatingPoint>(_ outMetal: T, _ outRef: T, _ N : Int, _ pr : Bool = true, _ prNote : String = "") -> Bool
 {
     let epsilon = 2 * (outRef.nextUp - outRef)
     let lowerBound = outRef - epsilon * sqrt(T(N))
@@ -86,7 +95,10 @@ public func printIfNotNear<T: BinaryFloatingPoint>(_ outMetal: T, _ outRef: T, _
     
     if !(rg ~= outMetal)
     {
-        print("Error: ref = ", outRef, "; got out = ", outMetal)
+        if pr
+        {
+            print(prNote, "Error: ref = ", outRef, "; got out = ", outMetal)
+        }
         return false
     }
     return true
@@ -130,4 +142,10 @@ public func initRandom(_ arr: inout [Int], _ size: Int, _ range: ClosedRange<Int
         let val = Int.random(in: range)
         arr.append(neg ? -val : val)
     }
+}
+
+public func initRandom<T: BinaryFloatingPoint>(_ v: inout T, _ range: ClosedRange<Float> = (0...10))
+{
+    let neg = Bool.random()
+    v = T(neg ? -Float.random(in: range) : Float.random(in: range))
 }

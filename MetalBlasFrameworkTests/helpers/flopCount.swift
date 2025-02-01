@@ -69,7 +69,12 @@ func getRotmGflopCount(N: Int, flag: Float) -> Double
 
 func getRotgGflopCount() -> Double
 {
-    return 10.0 // ish, kinda dumb
+    return 10.0 / 1e9 // ish, kinda dumb
+}
+
+func getRotmgGflopCount() -> Double
+{
+    return 20.0 / 1e9
 }
 
 func getSwapGbyteCount(N: Int) -> Double

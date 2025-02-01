@@ -60,6 +60,8 @@
 				blas1/metalRotg.swift,
 				blas1/metalRotm.metal,
 				blas1/metalRotm.swift,
+				blas1/metalRotmg.metal,
+				blas1/metalRotmg.swift,
 				blas1/metalScal.metal,
 				blas1/metalScal.swift,
 				blas1/metalSwap.metal,
