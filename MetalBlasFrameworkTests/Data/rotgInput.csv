@@ -1,0 +1,10 @@
+func,prec,M,N,K,incx,incy,lda,ldb,ldc,ldd,alpha,beta,transA,transB,useBuf,coldIters,hotIters
+rotg,fp32,1,1,1,1,1,1,1,1,1,6,8,N,N,false,2,10
+rotg,fp32,1,1,1,1,1,1,1,1,1,-96,32,N,N,true,2,10
+rotg,fp16,1,1,1,1,1,1,1,1,1,-12,-5,N,N,false,2,10
+rotg,fp16,1,1,1,1,1,1,1,1,1,96,32,N,N,true,2,10
+rotg,fp32,1,1,1,1,1,1,1,1,1,0,0,N,N,false,2,10
+rotg,fp32,1,1,1,1,1,1,1,1,1,0,0,N,N,true,2,10
+rotg,fp16,1,1,1,1,1,1,1,1,1,0,0,N,N,false,2,10
+rotg,fp16,1,1,1,1,1,1,1,1,1,0,0,N,N,true,2,10
+

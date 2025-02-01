@@ -90,6 +90,8 @@ public class MetalBlas
                 "srot": try device.makeComputePipelineState(function: self.library.makeFunction(name: "metalSrot")!),
                 "hrotm": try device.makeComputePipelineState(function: self.library.makeFunction(name: "metalHrotm")!),
                 "srotm": try device.makeComputePipelineState(function: self.library.makeFunction(name: "metalSrotm")!),
+                "hrotg": try device.makeComputePipelineState(function: self.library.makeFunction(name: "metalHrotg")!),
+                "srotg": try device.makeComputePipelineState(function: self.library.makeFunction(name: "metalSrotg")!),
                 "hscal": try device.makeComputePipelineState(function: self.library.makeFunction(name: "metalHscal")!),
                 "sscal": try device.makeComputePipelineState(function: self.library.makeFunction(name: "metalSscal")!),
                 "hswap": try device.makeComputePipelineState(function: self.library.makeFunction(name: "metalHswap")!),
@@ -127,6 +129,12 @@ public class MetalBlas
         device.makeBuffer(bytes: matA, length: matA.count * MemoryLayout<T>.stride, options: ops)
     }
 
+    public func getDeviceBuffer<T: Numeric>(_ a: inout T, _ ops: MTLResourceOptions) -> MTLBuffer?
+    {
+        // TODO: ?
+        device.makeBuffer(bytes: &a, length: MemoryLayout<T>.stride, options: ops)
+    }
+
     public func copyBufToArray<T: Numeric>(_ bufA: MTLBuffer, _ matA: inout [T])
     {
         // Copy the data into the array
@@ -136,5 +144,12 @@ public class MetalBlas
         let typeBuffer = UnsafeBufferPointer(start: typePtr, count: size)
         matA = Array(typeBuffer)
     }
-}
 
+    public func copyBufToVal<T: Numeric>(_ bufA: MTLBuffer, _ a: inout T)
+    {
+        let size = MemoryLayout<T>.stride
+        let typePtr = bufA.contents().bindMemory(to: T.self, capacity: size)
+        let typeBuffer = UnsafeBufferPointer(start: typePtr, count: size)
+        a = typeBuffer[0]
+    }
+}
