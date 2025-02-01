@@ -7,7 +7,16 @@
 
 import Accelerate
 
-public func cblasTrans(transA: TransposeType) -> CBLAS_TRANSPOSE
+public func cblasOrder(_ order: OrderType) -> CBLAS_ORDER
+{
+    if order == .RowMajor
+    {
+        return CblasRowMajor
+    }
+    return CblasColMajor
+}
+
+public func cblasTrans(_ transA: TransposeType) -> CBLAS_TRANSPOSE
 {
     if transA == .Transpose
     {
@@ -24,7 +33,7 @@ public func printIfNotEqual<T: Numeric>(_ outMetal: [ T ], _ outRef: [ T ], _ pr
 {
     if outMetal.count != outRef.count
     {
-        print("Error: Trying to compare arrays of different sizes")
+        print("Error: Trying to compare arrays of different sizes, our size: ", outMetal.count, " ref size: ", outRef.count)
         return false
     }
 
@@ -60,7 +69,7 @@ public func printIfNotNear<T: BinaryFloatingPoint>(_ outMetal: [ T ], _ outRef: 
 {
     if outMetal.count != outRef.count
     {
-        print("Error: Trying to compare arrays of different sizes")
+        print("Error: Trying to compare arrays of different sizes, our size: ", outMetal.count, " ref size: ", outRef.count)
         return false
     }
 
@@ -126,7 +135,7 @@ public func initRandom(_ arr: inout [Float], _ size: Int, _ range: ClosedRange<F
 
 public func initRandom(_ arr: inout [Float16], _ size: Int, _ range: ClosedRange<Float16> = (0...10))
 {
-    for _ in 0...size - 1
+    for _ in 0..<size
     {
         let neg = Bool.random()
         let val = Float16.random(in: range)
@@ -136,7 +145,7 @@ public func initRandom(_ arr: inout [Float16], _ size: Int, _ range: ClosedRange
 
 public func initRandom(_ arr: inout [Int], _ size: Int, _ range: ClosedRange<Int> = (0...10))
 {
-    for _ in 0...size - 1
+    for _ in 0..<size
     {
         let neg = Bool.random()
         let val = Int.random(in: range)
@@ -148,4 +157,14 @@ public func initRandom<T: BinaryFloatingPoint>(_ v: inout T, _ range: ClosedRang
 {
     let neg = Bool.random()
     v = T(neg ? -Float.random(in: range) : Float.random(in: range))
+}
+
+public func initRandomInt<T: BinaryFloatingPoint>(_ arr: inout [T], _ size: Int, _ range: ClosedRange<Int> = (0...10))
+{
+    for _ in 0..<size
+    {
+        let neg : Bool = Bool.random()
+        let val = Int.random(in: range)
+        arr.append(neg ? T(-val) : T(val))
+    }
 }

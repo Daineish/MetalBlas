@@ -66,6 +66,8 @@
 				blas1/metalScal.swift,
 				blas1/metalSwap.metal,
 				blas1/metalSwap.swift,
+				blas2/metalGemv.metal,
+				blas2/metalGemv.swift,
 				blas3/metalGemm.metal,
 				blas3/metalGemm.swift,
 				MetalBlas.metal,

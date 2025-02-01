@@ -118,7 +118,7 @@ class AxpyFramework<T: BinaryFloatingPoint>
         else if T.self == Double.self
         {
             var yCpy = yArrD!
-            refDaxpy(N, Double(alpha), yArrD, incx, &yCpy, incy)
+            refDaxpy(N, Double(alpha), xArrD, incx, &yCpy, incy)
             callAxpy(false)
             if useBuffers
             {

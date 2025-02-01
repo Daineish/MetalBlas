@@ -58,8 +58,8 @@ public func refSgemm(_ transA: TransposeType, _ transB: TransposeType, _ M: Int,
     let lda_la = __LAPACK_int(lda)
     let ldb_la = __LAPACK_int(ldb)
     let ldc_la = __LAPACK_int(ldc)
-    let transA_cblas = cblasTrans(transA: transA)
-    let transB_cblas = cblasTrans(transA: transB)
+    let transA_cblas = cblasTrans(transA)
+    let transB_cblas = cblasTrans(transB)
     testSgemm(transA_cblas, transB_cblas, M_la, N_la, K_la, alpha, A, lda_la, B, ldb_la, beta, &C, ldc_la)
 }
 
@@ -71,8 +71,8 @@ public func refDgemm(_ transA: TransposeType, _ transB: TransposeType, _ M: Int,
     let lda_la = __LAPACK_int(lda)
     let ldb_la = __LAPACK_int(ldb)
     let ldc_la = __LAPACK_int(ldc)
-    let transA_cblas = cblasTrans(transA: transA)
-    let transB_cblas = cblasTrans(transA: transB)
+    let transA_cblas = cblasTrans(transA)
+    let transB_cblas = cblasTrans(transB)
     testDgemm(transA_cblas, transB_cblas, M_la, N_la, K_la, alpha, A, lda_la, B, ldb_la, beta, &C, ldc_la)
 }
 

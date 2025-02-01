@@ -1,4 +1,10 @@
-func,prec,M,N,K,incx,incy,lda,ldb,ldc,ldd,alpha,beta,transA,transB,useBuf,coldIters,hotIters
-gemv,fp32,8192,8192,1,1,1,8192,1,1,1,2,3,N,N,2,100
-gemv,fp32,1024,1024,1,1,1,1024,1,1,1,2,3,T,N,2,10
+func,prec,M,N,K,incx,incy,lda,ldb,ldc,ldd,alpha,beta,order,transA,transB,useBuf,coldIters,hotIters
+gemv,fp32,1024,256,1,2,3,1200,1,1,1,2,3,C,N,N,true,2,10
+gemv,fp32,1024,1024,1,1,1,1200,1,1,1,2,3,C,T,N,false,2,10
+gemv,fp16,512,1024,1,3,2,1200,1,1,1,2,3,C,N,N,true,2,10
+gemv,fp16,1024,256,1,1,1,1024,1,1,1,2,3,C,T,N,false,2,10
+gemv,fp32,512,1024,1,2,3,1200,1,1,1,2,3,R,T,N,true,2,10
+gemv,fp32,1024,256,1,1,1,1024,1,1,1,2,3,R,N,N,false,2,10
+gemv,fp16,512,1024,1,3,2,1200,1,1,1,2,3,R,T,N,true,2,10
+gemv,fp16,1024,256,1,1,1,1024,1,1,1,2,3,R,N,N,false,2,10
 

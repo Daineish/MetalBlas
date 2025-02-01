@@ -55,7 +55,7 @@ public extension MetalBlas
         computeEncoder.setBuffer(buffery, offset: 0, index: 4)
         computeEncoder.setBuffer(bufferIncy, offset: 0, index: 5)
 
-        let w = pipelineState.threadExecutionWidth
+        let w = pipelineState.maxTotalThreadsPerThreadgroup
         let threadsPerThreadgroup = MTLSizeMake(w, 1, 1)
 
         let threadgroups = MTLSize(

@@ -7,7 +7,13 @@
 
 import Metal
 
-public enum TransposeType
+public enum OrderType: UInt32
+{
+    case ColMajor  = 0
+    case RowMajor  = 1
+}
+
+public enum TransposeType: UInt32
 {
     case NoTranspose
     case Transpose
@@ -72,6 +78,7 @@ public class MetalBlas
         do
         {
             pipelineStates = [
+                // Level 1
                 "hasum": try device.makeComputePipelineState(function: self.library.makeFunction(name: "metalHasum")!),
                 "sasum": try device.makeComputePipelineState(function: self.library.makeFunction(name: "metalSasum")!),
                 "haxpy": try device.makeComputePipelineState(function: self.library.makeFunction(name: "metalHaxpy")!),
@@ -98,8 +105,16 @@ public class MetalBlas
                 "sscal": try device.makeComputePipelineState(function: self.library.makeFunction(name: "metalSscal")!),
                 "hswap": try device.makeComputePipelineState(function: self.library.makeFunction(name: "metalHswap")!),
                 "sswap": try device.makeComputePipelineState(function: self.library.makeFunction(name: "metalSswap")!),
+
+                // Level 2
+                "hgemv": try device.makeComputePipelineState(function: self.library.makeFunction(name: "metalHgemv")!),
+                "sgemv": try device.makeComputePipelineState(function: self.library.makeFunction(name: "metalSgemv")!),
+
+                // Level 3
                 "hgemm": try device.makeComputePipelineState(function: self.library.makeFunction(name: "metalHgemm")!),
                 "sgemm": try device.makeComputePipelineState(function: self.library.makeFunction(name: "metalSgemm")!),
+
+                // Helpers
                 "sreduce": try device.makeComputePipelineState(function: self.library.makeFunction(name: "metalsReduce")!),
                 "hreduce": try device.makeComputePipelineState(function: self.library.makeFunction(name: "metalhReduce")!),
                 "sreduceMax": try device.makeComputePipelineState(function: self.library.makeFunction(name: "metalsReduceMax")!),

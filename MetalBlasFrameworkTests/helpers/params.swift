@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import MetalBlasFramework
 
 enum precisionType
 {
@@ -25,12 +26,8 @@ enum funcType
     case asum
 }
 
-public enum TransposeType
-{
-    case NoTranspose
-    case Transpose
-    case ConjTranspose
-}
+public typealias OrderType = MetalBlasFramework.OrderType
+public typealias TransposeType = MetalBlasFramework.TransposeType
 
 struct TestParams
 {
@@ -48,6 +45,8 @@ struct TestParams
 
     var alpha: Float
     var beta: Float
+
+    var order: OrderType
 
     var transA : TransposeType
     var transB : TransposeType
@@ -74,7 +73,9 @@ struct TestParams
 
         alpha = 1.0
         beta = 0.0
-    
+
+        order = .ColMajor
+
         transA = .NoTranspose
         transB = .NoTranspose
 
@@ -96,6 +97,7 @@ struct TestParams
         incy = cpy.incy
         alpha = cpy.alpha
         beta = cpy.beta
+        order = cpy.order
         transA = cpy.transA
         transB = cpy.transB
         function = cpy.function

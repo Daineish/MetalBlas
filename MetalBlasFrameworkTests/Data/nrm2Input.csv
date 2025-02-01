@@ -1,5 +1,5 @@
 func,prec,M,N,K,incx,incy,lda,ldb,ldc,ldd,alpha,beta,transA,transB,useBuf,coldIters,hotIters
-nrm2,fp32,1,100000,1,1,1,1,1,1,1,2,0,N,N,false,2,10
-nrm2,fp32,1,33554432,1,1,1,1,1,1,1,2,0,N,N,true,2,10
-nrm2,fp16,1,16777,1,1,1,1,1,1,1,2,0,N,N,false,2,10
-nrm2,fp16,1,99999,1,1,1,1,1,1,1,2,0,N,N,true,2,10
+nrm2,fp32,1,100000,1,1,1,1,1,1,1,2,0,C,N,N,false,2,10
+nrm2,fp32,1,33554432,1,1,1,1,1,1,1,2,0,C,N,N,true,2,10
+nrm2,fp16,1,16777,1,1,1,1,1,1,1,2,0,C,N,N,false,2,10
+nrm2,fp16,1,99999,1,1,1,1,1,1,1,2,0,C,N,N,true,2,10

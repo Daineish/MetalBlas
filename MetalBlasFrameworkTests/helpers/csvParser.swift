@@ -88,6 +88,15 @@ class csvParser
         return funcType.axpy
     }
 
+    func parseOrder(s: String) -> OrderType
+    {
+        if s == "R" || s == "Row" || s == "RowMajor"
+        {
+            return .RowMajor
+        }
+        return .ColMajor
+    }
+
     func parseTrans(s: String) -> TransposeType
     {
         if(s == "T" || s == "t" || s == "Transpose")
@@ -135,11 +144,12 @@ class csvParser
             param.ldd = Int(cols[10]) ?? 0
             param.alpha = Float(cols[11]) ?? 2.0
             param.beta = Float(cols[12]) ?? 1.0
-            param.transA = parseTrans(s: cols[13])
-            param.transB = parseTrans(s: cols[14])
-            param.useBuffers = Bool(cols[15]) ?? false
-            param.coldIters = Int(cols[16]) ?? 2
-            param.hotIters = Int(cols[17]) ?? 10
+            param.order = parseOrder(s: cols[13])
+            param.transA = parseTrans(s: cols[14])
+            param.transB = parseTrans(s: cols[15])
+            param.useBuffers = Bool(cols[16]) ?? false
+            param.coldIters = Int(cols[17]) ?? 2
+            param.hotIters = Int(cols[18]) ?? 10
 
             allParams.append(param)
         }

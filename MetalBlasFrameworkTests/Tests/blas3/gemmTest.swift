@@ -8,22 +8,6 @@
 import XCTest
 @testable import MetalBlasFramework
 
-func getMetalTranspose(_ trans: TransposeType) -> MetalBlasFramework.TransposeType
-{
-    if(trans == .NoTranspose)
-    {
-        return MetalBlasFramework.TransposeType.NoTranspose
-    }
-    else if(trans == .Transpose)
-    {
-        return MetalBlasFramework.TransposeType.Transpose
-    }
-    else
-    {
-        return MetalBlasFramework.TransposeType.ConjTranspose
-    }
-}
-
 class GemmFramework<T: BinaryFloatingPoint>
 {
     var useBuffers : Bool
@@ -46,11 +30,8 @@ class GemmFramework<T: BinaryFloatingPoint>
     var ldc : Int
     let storageMethod = MetalBlasFramework.StorageMethod.ColMajor
 
-    let transAt : TransposeType
-    let transBt : TransposeType
-
-    let transA : MetalBlasFramework.TransposeType
-    let transB : MetalBlasFramework.TransposeType
+    let transA : TransposeType
+    let transB : TransposeType
 
     var aBuf : MTLBuffer!
     var bBuf : MTLBuffer!
@@ -73,10 +54,8 @@ class GemmFramework<T: BinaryFloatingPoint>
         ldc = params.ldc
 
         // TODO: only one transpose type lol
-        transAt = params.transA
-        transBt = params.transB
-        transA = getMetalTranspose(transAt)
-        transB = getMetalTranspose(transBt)
+        transA = params.transA
+        transB = params.transB
 
         assert(transA == .NoTranspose && transB == .NoTranspose)
 
@@ -150,9 +129,9 @@ class GemmFramework<T: BinaryFloatingPoint>
     {
         if callRef
         {
-            T.self == Float.self ? refSgemm(transAt, transBt, M, N, K, alpha, aMatF, lda, bMatF, ldb, beta, &cMatF, ldc) :
-            T.self == Double.self ? refDgemm(transAt, transBt, M, N, K, Double(alpha), aMatD, lda, bMatD, ldb, Double(beta), &cMatD, ldc) :
-                                    refHgemm(transAt, transBt, M, N, K, Float16(alpha), aMatH, lda, bMatH, ldb, Float16(beta), &cMatH, ldc)
+            T.self == Float.self ? refSgemm(transA, transB, M, N, K, alpha, aMatF, lda, bMatF, ldb, beta, &cMatF, ldc) :
+            T.self == Double.self ? refDgemm(transA, transB, M, N, K, Double(alpha), aMatD, lda, bMatD, ldb, Double(beta), &cMatD, ldc) :
+                                    refHgemm(transA, transB, M, N, K, Float16(alpha), aMatH, lda, bMatH, ldb, Float16(beta), &cMatH, ldc)
         }
         else if useBuffers
         {
@@ -173,7 +152,7 @@ class GemmFramework<T: BinaryFloatingPoint>
         if T.self == Float.self
         {
             var cCpy = cMatF!
-            refSgemm(transAt, transBt, M, N, K, alpha, aMatF, lda, bMatF, ldb, beta, &cCpy, ldc)
+            refSgemm(transA, transB, M, N, K, alpha, aMatF, lda, bMatF, ldb, beta, &cCpy, ldc)
             callGemm(false)
             if useBuffers
             {
@@ -185,7 +164,7 @@ class GemmFramework<T: BinaryFloatingPoint>
         else if T.self == Double.self
         {
             var cCpy = cMatD!
-            refDgemm(transAt, transBt, M, N, K, Double(alpha), aMatD, lda, bMatD, ldb, Double(beta), &cCpy, ldc)
+            refDgemm(transA, transB, M, N, K, Double(alpha), aMatD, lda, bMatD, ldb, Double(beta), &cCpy, ldc)
             callGemm(false)
             if useBuffers
             {
@@ -197,7 +176,7 @@ class GemmFramework<T: BinaryFloatingPoint>
         else if T.self == Float16.self
         {
             var cCpy = cMatH!
-            refHgemm(transAt, transBt, M, N, K, Float16(alpha), aMatH, lda, bMatH, ldb, Float16(beta), &cCpy, ldc)
+            refHgemm(transA, transB, M, N, K, Float16(alpha), aMatH, lda, bMatH, ldb, Float16(beta), &cCpy, ldc)
             callGemm(false)
             if useBuffers
             {
