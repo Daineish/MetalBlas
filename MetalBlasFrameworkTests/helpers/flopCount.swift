@@ -89,6 +89,13 @@ func getGemvGflopCount(transA: TransposeType, M: Int, N: Int) -> Double
     return (2.0 * Double(M) * Double(N) + 2.0 * Double(K)) / 1e9
 }
 
+func getGerGflopCount(M: Int, N: Int) -> Double
+{
+    let fma = 2 * Double(M) * Double(N)
+    let scale = Double(min(M, N))
+    return (fma + scale) / 1e9
+}
+
 func getGemmGflopCount(M: Int, N: Int, K: Int) -> Double
 {
     // First term for matmul, second term for scaling/adding C matrix

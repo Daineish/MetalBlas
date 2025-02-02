@@ -109,6 +109,8 @@ public class MetalBlas
                 // Level 2
                 "hgemv": try device.makeComputePipelineState(function: self.library.makeFunction(name: "metalHgemv")!),
                 "sgemv": try device.makeComputePipelineState(function: self.library.makeFunction(name: "metalSgemv")!),
+                "hger": try device.makeComputePipelineState(function: self.library.makeFunction(name: "metalHger")!),
+                "sger": try device.makeComputePipelineState(function: self.library.makeFunction(name: "metalSger")!),
 
                 // Level 3
                 "hgemm": try device.makeComputePipelineState(function: self.library.makeFunction(name: "metalHgemm")!),
