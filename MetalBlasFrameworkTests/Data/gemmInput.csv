@@ -1,5 +1,0 @@
-func,prec,M,N,K,incx,incy,lda,ldb,ldc,ldd,alpha,beta,transA,transB,useBuf,coldIters,hotIters
-gemm,fp32,1024,1024,1024,1,1,1024,1024,1024,1,1,1,C,N,N,true,2,10
-gemm,fp32,1024,1024,1024,1,1,1024,1024,1024,1,2,3,C,N,N,false,2,10
-gemm,fp16,256,256,256,1,1,256,256,256,1,1,1,C,N,N,true,2,10
-gemm,fp16,256,256,256,1,1,256,256,256,1,2,3,C,N,N,false,2,10

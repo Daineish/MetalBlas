@@ -204,7 +204,7 @@ class Nrm2Framework<T: BinaryFloatingPoint>
 class nrm2Test: XCTestCase
 {
     var params : TestParams!
-    let fileName = "Projects/CodingProjects/Swift Projects/MetalBlas/MetalBlasFrameworkTests/Data/nrm2Input"
+    let fileName = "Projects/CodingProjects/Swift Projects/MetalBlas/MetalBlasFrameworkTests/Data/blas1/nrm2Input"
     let metalBlas = MetalBlas()
     var useBuffersDirectly = false
     var paramLineNum = 0

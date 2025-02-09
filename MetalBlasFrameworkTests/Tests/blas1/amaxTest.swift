@@ -180,7 +180,7 @@ class AmaxFramework<T: Numeric>
 class amaxTest: XCTestCase
 {
     var params : TestParams!
-    let fileName = "Projects/CodingProjects/Swift Projects/MetalBlas/MetalBlasFrameworkTests/Data/amaxInput"
+    let fileName = "Projects/CodingProjects/Swift Projects/MetalBlas/MetalBlasFrameworkTests/Data/blas1/amaxInput"
     let metalBlas = MetalBlas()
     var useBuffersDirectly = false
     var paramLineNum = 0

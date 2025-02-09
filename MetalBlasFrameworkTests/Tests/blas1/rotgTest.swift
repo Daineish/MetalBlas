@@ -182,7 +182,7 @@ class RotgFramework<T: BinaryFloatingPoint>
 class rotgTest: XCTestCase
 {
     var params : TestParams!
-    let fileName = "Projects/CodingProjects/Swift Projects/MetalBlas/MetalBlasFrameworkTests/Data/rotgInput"
+    let fileName = "Projects/CodingProjects/Swift Projects/MetalBlas/MetalBlasFrameworkTests/Data/blas1/rotgInput"
     let metalBlas = MetalBlas()
     var useBuffersDirectly = false
     var paramLineNum = 0

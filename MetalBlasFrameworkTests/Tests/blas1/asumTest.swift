@@ -204,7 +204,7 @@ class AsumFramework<T: BinaryFloatingPoint>
 class asumTest: XCTestCase
 {
     var params : TestParams!
-    let fileName = "Projects/CodingProjects/Swift Projects/MetalBlas/MetalBlasFrameworkTests/Data/asumInput"
+    let fileName = "Projects/CodingProjects/Swift Projects/MetalBlas/MetalBlasFrameworkTests/Data/blas1/asumInput"
     let metalBlas = MetalBlas()
     var useBuffersDirectly = false
     var paramLineNum = 0

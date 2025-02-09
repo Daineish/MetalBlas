@@ -1,0 +1,5 @@
+func,prec,N,incx,incy,alpha,useBuf,coldIters,hotIters
+axpy,fp32,16777216,1,1,2,false,2,10
+axpy,fp32,16777216,1,1,2,true,2,10
+axpy,fp16,16777216,1,1,2,false,2,10
+axpy,fp16,16777216,1,1,2,true,2,10

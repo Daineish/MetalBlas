@@ -42,114 +42,41 @@ class csvParser
         return data
     }
 
-    func parsePrec(s: String) -> precisionType
-    {
-        if(s == "s" || s == "fp32")
-        {
-            return precisionType.fp32
-        }
-        else if(s == "h" || s == "fp16")
-        {
-            return precisionType.fp16
-        }
-        else if(s == "d" || s == "fp64")
-        {
-            return precisionType.fp64
-        }
-        return precisionType.fp32
-    }
-
-    func parseFunc(s: String) -> funcType
-    {
-        if(s == "axpy")
-        {
-            return funcType.axpy
-        }
-        else if(s == "scal")
-        {
-            return funcType.scal
-        }
-        else if(s == "copy")
-        {
-            return funcType.copy
-        }
-        else if(s == "gemv")
-        {
-            return funcType.gemv
-        }
-        else if(s == "gemm")
-        {
-            return funcType.gemm
-        }
-        else if(s == "asum")
-        {
-            return funcType.asum
-        }
-        return funcType.axpy
-    }
-
-    func parseOrder(s: String) -> OrderType
-    {
-        if s == "R" || s == "Row" || s == "RowMajor"
-        {
-            return .RowMajor
-        }
-        return .ColMajor
-    }
-
-    func parseTrans(s: String) -> TransposeType
-    {
-        if(s == "T" || s == "t" || s == "Transpose")
-        {
-            return .Transpose
-        }
-        else if(s == "N" || s == "n" || s == "NoTranspose")
-        {
-            return .NoTranspose
-        }
-        else if(s == "C" || s == "c" || s == "ConjTranspose")
-        {
-            return .ConjTranspose
-        }
-        return .NoTranspose
-    }
-
     func parse() -> [TestParams]
     {
         var allParams : [TestParams] = []
         let data = readFile()
 
         var rows = data.components(separatedBy: "\n")
+
+        let headerRow = rows[0]
         rows.removeFirst()
 
-        for row in rows
+        let headers = headerRow.components(separatedBy: ",")
+
+        for i in 0..<rows.count
         {
-            if row.isEmpty
+            let row = rows[i]
+            if row.isEmpty || (row.starts(with: "//"))
             {
-                break
+                // dummy param for now
+                allParams.append(TestParams())
+                continue
             }
 
             let cols = row.components(separatedBy: ",")
+            if cols.count != headers.count
+            {
+                print("Error in file ", filename, ", row #", i, " has ", cols.count, " cols, while header has ", headers.count, " cols. Skipping.")
+                continue
+            }
+
             var param = TestParams()
-            param.function = parseFunc(s:cols[0])
-            param.prec = parsePrec(s: cols[1])
-            param.M = Int(cols[2]) ?? 0
-            param.N = Int(cols[3]) ?? 0
-            param.K = Int(cols[4]) ?? 0
-            param.incx = Int(cols[5]) ?? 0
-            param.incy = Int(cols[6]) ?? 0
-            param.lda = Int(cols[7]) ?? 0
-            param.ldb = Int(cols[8]) ?? 0
-            param.ldc = Int(cols[9]) ?? 0
-            param.ldd = Int(cols[10]) ?? 0
-            param.alpha = Float(cols[11]) ?? 2.0
-            param.beta = Float(cols[12]) ?? 1.0
-            param.order = parseOrder(s: cols[13])
-            param.transA = parseTrans(s: cols[14])
-            param.transB = parseTrans(s: cols[15])
-            param.useBuffers = Bool(cols[16]) ?? false
-            param.coldIters = Int(cols[17]) ?? 2
-            param.hotIters = Int(cols[18]) ?? 10
+
+            for i in 0 ..< headers.count
+            {
+                param.set(headers[i], cols[i])
+            }
 
             allParams.append(param)
         }

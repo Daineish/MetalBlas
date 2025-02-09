@@ -1,0 +1,6 @@
+func,prec,N,incx,alpha,useBuf,coldIters,hotIters
+scal,fp32,16777216,1,2,false,2,10
+scal,fp32,16777216,1,2,true,2,10
+scal,fp16,16777216,1,2,false,2,10
+scal,fp16,16777216,1,2,true,2,10
+

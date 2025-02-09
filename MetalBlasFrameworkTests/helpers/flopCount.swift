@@ -82,6 +82,13 @@ func getSwapGbyteCount(N: Int) -> Double
     return 2.0 * Double(N) / 1e9
 }
 
+func getGbmvGflopCount(transA: TransposeType, M: Int, N: Int, KL: Int, KU: Int) -> Double
+{
+    // TODO: calculate more accurate flops
+    let K = transA == .NoTranspose ? N : M
+    return (2.0 * Double(M) * Double(N) + 2.0 * Double(K)) / 1e9
+}
+
 func getGemvGflopCount(transA: TransposeType, M: Int, N: Int) -> Double
 {
     // Including scalar multiplications

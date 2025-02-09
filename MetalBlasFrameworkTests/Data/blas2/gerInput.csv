@@ -1,0 +1,10 @@
+func,prec,M,N,incx,incy,lda,alpha,order,useBuf,coldIters,hotIters
+ger,fp32,1024,256,2,3,1200,2,C,true,2,10
+ger,fp32,1024,1024,1,1,1200,3,C,false,2,10
+ger,fp16,512,1024,3,2,1200,4,C,true,2,10
+ger,fp16,1024,256,1,1,1024,3,C,false,2,10
+ger,fp32,512,1024,2,3,1200,-2,R,true,2,10
+ger,fp32,1024,256,1,1,1024,-3,R,false,2,10
+ger,fp16,512,1024,3,2,1200,-1,R,true,2,10
+ger,fp16,1024,256,1,1,1024,1,R,false,2,10
+

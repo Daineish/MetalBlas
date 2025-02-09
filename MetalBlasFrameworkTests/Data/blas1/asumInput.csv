@@ -1,0 +1,5 @@
+func,prec,N,incx,useBuf,coldIters,hotIters
+asum,fp32,7163893,1,false,2,10
+asum,fp32,33554432,1,true,2,10
+asum,fp16,16777,1,false,2,10
+asum,fp16,99999,1,true,2,10

@@ -1,14 +1,14 @@
 //
-//  gerTest.swift
+//  gbmvTest.swift
 //  MetalBlas
 //
-//  Created by Daine McNiven on 2025-02-01.
+//  Created by Daine McNiven on 2025-02-03.
 //
 
 import XCTest
 @testable import MetalBlasFramework
 
-class GerFramework<T: BinaryFloatingPoint>
+class GbmvFramework<T: BinaryFloatingPoint>
 {
     var useBuffers : Bool
     var aArrH : [ Float16 ]!
@@ -21,12 +21,16 @@ class GerFramework<T: BinaryFloatingPoint>
     var xArrD : [ Double ]!
     var yArrD : [ Double ]!
     var alpha: Float
+    var beta: Float
     let M : Int
     let N : Int
+    let KL : Int
+    let KU : Int
     let lda : Int
     let incx : Int
     let incy : Int
 
+    let transA : TransposeType
     let order : OrderType
 
     var aBuf : MTLBuffer!
@@ -41,28 +45,36 @@ class GerFramework<T: BinaryFloatingPoint>
 
         useBuffers = useBuffersIn
         alpha = Float(params.alpha)
+        beta = Float(params.beta)
         M = params.M
         N = params.N
+        KL = params.KL
+        KU = params.KU
         lda = params.lda
         incx = params.incx
         incy = params.incy
 
         order = params.order
+        transA = params.transA
 
         metalBlas = metalBlasIn!
 
         let sizeA : Int = order == .ColMajor ? N * lda : M * lda
-        let sizeX : Int = M * incx
-        let sizeY : Int = N * incy
+        let sizeX : Int = transA == .NoTranspose ? N * incx : M * incx
+        let sizeY : Int = transA == .NoTranspose ? M * incy : N * incy
 
         alpha = params.alpha
+        beta = params.beta
 
+        // Can initialize as if a normal matrix, will deal with it as if it were banded. This
+        // way we'll implicitly check that we aren't changing 'out-of-band' data.
         if T.self == Float.self
         {
             aArrF = []; xArrF = []; yArrF = []
             initRandomInt(&aArrF, sizeA)
             initRandomInt(&xArrF, sizeX)
             initRandomInt(&yArrF, sizeY)
+
             if useBuffers
             {
                 aBuf = metalBlas.getDeviceBuffer(matA: aArrF, M: aArrF.count, [.storageModeManaged])!
@@ -99,65 +111,65 @@ class GerFramework<T: BinaryFloatingPoint>
         }
     }
 
-    private func callGer(_ callRef: Bool)
+    private func callGbmv(_ callRef: Bool)
     {
         if callRef
         {
-            T.self == Float.self ? refSger(order, M, N, alpha, xArrF, incx, yArrF, incy, &aArrF, lda) :
-            T.self == Double.self ? refDger(order, M, N, Double(alpha), xArrD, incx, yArrD, incy, &aArrD, lda) :
-                                    refHger(order, M, N, Float16(alpha), xArrH, incx, yArrH, incy, &aArrH, lda)
+            T.self == Float.self ? refSgbmv(order, transA, M, N, KL, KU, alpha, aArrF, lda, xArrF, incx, beta, &yArrF, incy) :
+            T.self == Double.self ? refDgbmv(order, transA, M, N, KL, KU, Double(alpha), aArrD, lda, xArrD, incx, Double(beta), &yArrD, incy) :
+                                    refHgbmv(order, transA, M, N, KL, KU, Float16(alpha), aArrH, lda, xArrH, incx, Float16(beta), &yArrH, incy)
         }
         else if useBuffers
         {
-            T.self == Float.self ? metalBlas.metalSger(order, M, N, alpha, xBuf, incx, yBuf, incy, &aBuf, lda) :
-            T.self == Double.self ? metalBlas.metalDger(order, M, N, Double(alpha), xBuf, incx, yBuf, incy, &aBuf, lda) :
-                                    metalBlas.metalHger(order, M, N, Float16(alpha), xBuf, incx, yBuf, incy, &aBuf, lda)
+            T.self == Float.self ? metalBlas.metalSgbmv(order, transA, M, N, KL, KU, alpha, aBuf, lda, xBuf, incx, beta, &yBuf, incy) :
+            T.self == Double.self ? metalBlas.metalDgbmv(order, transA, M, N, KL, KU, Double(alpha), aBuf, lda, xBuf, incx, Double(beta), &yBuf, incy) :
+                                    metalBlas.metalHgbmv(order, transA, M, N, KL, KU, Float16(alpha), aBuf, lda, xBuf, incx, Float16(beta), &yBuf, incy)
         }
         else
         {
-            T.self == Float.self ? metalBlas.metalSger(order, M, N, alpha, xArrF, incx, yArrF, incy, &aArrF, lda) :
-            T.self == Double.self ? metalBlas.metalDger(order, M, N, Double(alpha), xArrD, incx, yArrD, incy, &aArrD, lda) :
-                                    metalBlas.metalHger(order, M, N, Float16(alpha), xArrH, incx, yArrH, incy, &aArrH, lda)
+            T.self == Float.self ? metalBlas.metalSgbmv(order, transA, M, N, KL, KU, alpha, aArrF, lda, xArrF, incx, beta, &yArrF, incy) :
+            T.self == Double.self ? metalBlas.metalDgbmv(order, transA, M, N, KL, KU, Double(alpha), aArrD, lda, xArrD, incx, Double(beta), &yArrD, incy) :
+                                    metalBlas.metalHgbmv(order, transA, M, N, KL, KU, Float16(alpha), aArrH, lda, xArrH, incx, Float16(beta), &yArrH, incy)
         }
     }
 
-    func validateGer() -> Bool
+    func validateGbmv() -> Bool
     {
         if T.self == Float.self
         {
-            var aCpy = aArrF!
-            refSger(order, M, N, alpha, xArrF, incx, yArrF, incy, &aCpy, lda)
-            callGer(false)
+            var yCpy = yArrF!
+            refSgbmv(order, transA, M, N, KL, KU, alpha, aArrF, lda, xArrF, incx, beta, &yCpy, incy)
+            callGbmv(false)
             if useBuffers
             {
-                metalBlas.copyBufToArray(aBuf, &aArrF)
+                metalBlas.copyBufToArray(yBuf, &yArrF)
             }
 
-            return printIfNotEqual(aArrF, aCpy)
+            return printIfNotEqual(yArrF, yCpy)
         }
         else if T.self == Double.self
         {
-            var aCpy = aArrD!
-            refDger(order, M, N, Double(alpha), xArrD, incx, yArrD, incy, &aCpy, lda)
-            callGer(false)
+            var yCpy = yArrD!
+            refDgbmv(order, transA, M, N, KL, KU, Double(alpha), aArrD, lda, xArrD, incx, Double(beta), &yCpy, incy)
+            callGbmv(false)
             if useBuffers
             {
-                metalBlas.copyBufToArray(aBuf, &aArrD)
+                metalBlas.copyBufToArray(yBuf, &yArrD)
             }
 
-            return printIfNotEqual(aArrD, aCpy)
+            return printIfNotEqual(yArrD, yCpy)
         }
         else if T.self == Float16.self
         {
-            var aCpy = aArrH!
-            refHger(order, M, N, Float16(alpha), xArrH, incx, yArrH, incy, &aCpy, lda)
-            callGer(false)
+            var yCpy = yArrH!
+            refHgbmv(order, transA, M, N, KL, KU, Float16(alpha), aArrH, lda, xArrH, incx, Float16(beta), &yCpy, incy)
+            callGbmv(false)
             if useBuffers
             {
-                metalBlas.copyBufToArray(aBuf, &aArrH)
+                metalBlas.copyBufToArray(yBuf, &yArrH)
             }
 
-            return printIfNotEqual(aArrH, aCpy)
+            return printIfNotEqual(yArrH, yCpy)
         }
         else
         {
@@ -166,17 +178,17 @@ class GerFramework<T: BinaryFloatingPoint>
         }
     }
 
-    func benchmarkGer(_ benchRef: Bool, _ coldIters: Int, _ hotIters: Int) -> Duration
+    func benchmarkGbmv(_ benchRef: Bool, _ coldIters: Int, _ hotIters: Int) -> Duration
     {
         for _ in 0...coldIters {
-            callGer(benchRef)
+            callGbmv(benchRef)
         }
 
         let clock = ContinuousClock()
         let result = clock.measure(
             {
                 for _ in 0...hotIters {
-                    callGer(benchRef)
+                    callGbmv(benchRef)
                 }
             }
         )
@@ -184,10 +196,10 @@ class GerFramework<T: BinaryFloatingPoint>
     }
 }
 
-class gerTest: XCTestCase
+class gbmvTest: XCTestCase
 {
     var params : TestParams!
-    let fileName = "Projects/CodingProjects/Swift Projects/MetalBlas/MetalBlasFrameworkTests/Data/blas2/gerInput"
+    let fileName = "Projects/CodingProjects/Swift Projects/MetalBlas/MetalBlasFrameworkTests/Data/blas2/gbmvInput"
     let metalBlas = MetalBlas()
     var useBuffersDirectly = false
     var paramLineNum = 0
@@ -211,65 +223,65 @@ class gerTest: XCTestCase
     func printTestInfo(_ name: String)
     {
         print(name)
-        print("\tfunc,prec,order,M,N,lda,incx,incy,alpha,beta,useBuf,coldIters,hotIters")
-        print("\tger", params.prec, params.order, params.M, params.N, params.lda, params.incx, params.incy, params.alpha, params.useBuffers, params.coldIters, params.hotIters, separator: ",")
+        print("\tfunc,prec,order,transA,M,N,KL,KU,lda,incx,incy,alpha,beta,useBuf,coldIters,hotIters")
+        print("\tgbmv", params.prec, params.order, params.transA, params.M, params.N, params.KL, params.KU, params.lda, params.incx, params.incy, params.alpha, params.beta, params.useBuffers, params.coldIters, params.hotIters, separator: ",")
     }
 
-    func gerTester<T: BinaryFloatingPoint>(_: T)
+    func gbmvTester<T: BinaryFloatingPoint>(_: T)
     {
         let benchAccelerate = true
         let verify = true
 
-        let gerFramework = GerFramework<T>(metalBlas, params, useBuffersDirectly)
+        let gbmvFramework = GbmvFramework<T>(metalBlas, params, useBuffersDirectly)
         
         if verify
         {
-            let pass = gerFramework.validateGer()
+            let pass = gbmvFramework.validateGbmv()
             XCTAssert(pass)
         }
 
-        var result = gerFramework.benchmarkGer(false, params.coldIters, params.hotIters)
-        var accResult = gerFramework.benchmarkGer(true, params.coldIters, params.hotIters)
+        var result = gbmvFramework.benchmarkGbmv(false, params.coldIters, params.hotIters)
+        var accResult = gbmvFramework.benchmarkGbmv(true, params.coldIters, params.hotIters)
         result /= params.hotIters
         accResult /= params.hotIters
 
         let avgTime = Double(result.components.attoseconds) / 1e18
-        let gflops = getGerGflopCount(M: params.M, N: params.N) / avgTime
+        let gflops = getGbmvGflopCount(transA: params.transA, M: params.M, N: params.N, KL: params.KL, KU: params.KU) / avgTime
         print("MetalBlas time in s: ", avgTime / 1e18)
         print("MetalBlas avg gflops: ", gflops)
 
         if benchAccelerate
         {
             let accAvgTime = Double(accResult.components.attoseconds) / 1e18
-            let accgflops = getGerGflopCount(M: params.M, N: params.N) / accAvgTime
+            let accgflops = getGbmvGflopCount(transA: params.transA, M: params.M, N: params.N, KL: params.KL, KU: params.KU) / accAvgTime
             print("Accelerate time in s: ", accAvgTime / 1e18)
             print("Accelerate avg gflops: ", accgflops)
         }
     }
 
-    func gerLauncher()
+    func gbmvLauncher()
     {
         if params.prec == precisionType.fp32
         {
-            gerTester(Float(0))
+            gbmvTester(Float(0))
         }
         else if params.prec == precisionType.fp64
         {
-            gerTester(Double(0))
+            gbmvTester(Double(0))
         }
         else if params.prec == precisionType.fp16
         {
-            gerTester(Float16(0))
+            gbmvTester(Float16(0))
         }
     }
 
-    func testGer0()
+    func testGbmv0()
     {
-        for i in 0..<8
+        for i in 0..<96
         {
             setupParams(i)
-            printTestInfo("testGer" + String(i))
-            gerLauncher()
+            printTestInfo("testGbmv" + String(i))
+            gbmvLauncher()
         }
     }
 }

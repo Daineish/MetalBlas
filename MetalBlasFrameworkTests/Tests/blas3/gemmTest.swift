@@ -53,7 +53,6 @@ class GemmFramework<T: BinaryFloatingPoint>
         ldb = params.ldb
         ldc = params.ldc
 
-        // TODO: only one transpose type lol
         transA = params.transA
         transB = params.transB
 
@@ -87,9 +86,9 @@ class GemmFramework<T: BinaryFloatingPoint>
         if T.self == Float.self
         {
             aMatF = []; bMatF = []; cMatF = []
-            initRandom(&aMatF, sizeA)
-            initRandom(&bMatF, sizeB)
-            initRandom(&cMatF, sizeC)
+            initRandomInt(&aMatF, sizeA)
+            initRandomInt(&bMatF, sizeB)
+            initRandomInt(&cMatF, sizeC)
             if useBuffers
             {
                 aBuf = metalBlas.getDeviceBuffer(matA: aMatF, M: aMatF.count, [.storageModeManaged])!//.storageModePrivate)!
@@ -100,9 +99,9 @@ class GemmFramework<T: BinaryFloatingPoint>
         else if T.self == Double.self
         {
             aMatD = []; bMatD = []; cMatD = []
-            initRandom(&aMatD, sizeA)
-            initRandom(&bMatD, sizeB)
-            initRandom(&cMatD, sizeC)
+            initRandomInt(&aMatD, sizeA)
+            initRandomInt(&bMatD, sizeB)
+            initRandomInt(&cMatD, sizeC)
             if useBuffers
             {
                 aBuf = metalBlas.getDeviceBuffer(matA: aMatD, M: aMatD.count, [.storageModeManaged])!//.storageModePrivate)!
@@ -113,9 +112,9 @@ class GemmFramework<T: BinaryFloatingPoint>
         else if T.self == Float16.self
         {
             aMatH = []; bMatH = []; cMatH = []
-            initRandom(&aMatH, sizeA)
-            initRandom(&bMatH, sizeB)
-            initRandom(&cMatH, sizeC)
+            initRandomInt(&aMatH, sizeA)
+            initRandomInt(&bMatH, sizeB)
+            initRandomInt(&cMatH, sizeC)
             if useBuffers
             {
                 aBuf = metalBlas.getDeviceBuffer(matA: aMatH, M: aMatH.count, [.storageModeManaged])!//.storageModePrivate)!
@@ -213,7 +212,7 @@ class GemmFramework<T: BinaryFloatingPoint>
 class gemmTestMetal: XCTestCase
 {
     var params : TestParams!
-    let fileName = "Projects/CodingProjects/Swift Projects/MetalBlas/MetalBlasFrameworkTests/Data/gemmInput"
+    let fileName = "Projects/CodingProjects/Swift Projects/MetalBlas/MetalBlasFrameworkTests/Data/blas3/gemmInput"
     let metalBlas = MetalBlas()
     var useBuffersDirectly = false
     var paramLineNum = 0

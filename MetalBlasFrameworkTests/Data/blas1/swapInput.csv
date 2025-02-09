@@ -1,0 +1,5 @@
+func,prec,N,incx,incy,useBuf,coldIters,hotIters
+swap,fp32,16777216,1,1,false,2,10
+swap,fp32,1232343,1,1,true,2,10
+swap,fp16,16777216,1,1,false,2,10
+swap,fp16,1232343,1,1,true,2,10

@@ -1,0 +1,6 @@
+func,prec,N,useBuf,coldIters,hotIters
+amax,fp32,7163893,1,false,2,10
+amax,fp32,7163893,1,true,2,10
+amax,fp16,16777,1,false,2,10
+amax,fp16,99999,1,true,2,10
+

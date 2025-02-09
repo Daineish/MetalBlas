@@ -1,0 +1,17 @@
+func,prec,N,incx,incy,alpha,useBuf,coldIters,hotIters
+rotm,fp32,7163893,1,1,-1,false,2,10
+rotm,fp32,50000,1,1,-1,true,2,10
+rotm,fp16,16777,1,1,-1,false,2,10
+rotm,fp16,99999,1,1,-1,true,2,10
+rotm,fp32,7163893,1,1,0,false,2,10
+rotm,fp32,50000,1,1,0,true,2,10
+rotm,fp16,16777,1,1,0,false,2,10
+rotm,fp16,99999,1,1,0,true,2,10
+rotm,fp32,7163893,1,1,1,false,2,10
+rotm,fp32,50000,1,1,1,true,2,10
+rotm,fp16,16777,1,1,1,false,2,10
+rotm,fp16,99999,1,1,1,true,2,10
+rotm,fp32,7163893,1,1,-2,false,2,10
+rotm,fp32,50000,1,1,-2,true,2,10
+rotm,fp16,16777,1,1,-2,false,2,10
+rotm,fp16,99999,1,1,-2,true,2,10

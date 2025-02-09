@@ -1,0 +1,9 @@
+func,prec,alpha,beta,useBuf,coldIters,hotIters
+rotg,fp32,6,8,false,2,10
+rotg,fp32,-96,32,true,2,10
+rotg,fp16,-12,-5,false,2,10
+rotg,fp16,96,32,true,2,10
+rotg,fp32,0,0,false,2,10
+rotg,fp32,0,0,true,2,10
+rotg,fp16,0,0,false,2,10
+rotg,fp16,0,0,true,2,10

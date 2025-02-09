@@ -1,0 +1,6 @@
+func,prec,N,incx,incy,useBuf,coldIters,hotIters
+copy,fp32,16777216,1,1,false,2,10
+copy,fp32,1232343,1,1,true,2,10
+copy,fp16,16777216,1,1,false,2,10
+copy,fp16,1232343,1,1,true,2,10
+
