@@ -21,4 +21,10 @@ typedef enum TransposeType : uint32_t
     ConjTranspose = 2
 } TransposeType;
 
+typedef enum UploType : uint32_t
+{
+    FillUpper,
+    FillLower,
+} UploType;
+
 #endif

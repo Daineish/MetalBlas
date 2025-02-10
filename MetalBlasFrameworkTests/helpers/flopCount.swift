@@ -103,6 +103,12 @@ func getGerGflopCount(M: Int, N: Int) -> Double
     return (fma + scale) / 1e9
 }
 
+func getSbmvGflopCount(N: Int, K: Int) -> Double
+{
+    // TODO: calc better
+    return 2.0 * Double(N) * Double(K) / 1e9
+}
+
 func getGemmGflopCount(M: Int, N: Int, K: Int) -> Double
 {
     // First term for matmul, second term for scaling/adding C matrix

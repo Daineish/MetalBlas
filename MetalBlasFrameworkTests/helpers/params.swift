@@ -28,6 +28,7 @@ enum funcType
 
 public typealias OrderType = MetalBlasFramework.OrderType
 public typealias TransposeType = MetalBlasFramework.TransposeType
+public typealias UploType = MetalBlasFramework.UploType
 
 struct TestParams
 {
@@ -52,6 +53,8 @@ struct TestParams
 
     var transA : TransposeType
     var transB : TransposeType
+
+    var uplo : UploType
 
     var coldIters = 2
     var hotIters = 100
@@ -83,6 +86,8 @@ struct TestParams
         transA = .NoTranspose
         transB = .NoTranspose
 
+        uplo = .FillUpper
+
         function = funcType.axpy
         prec = precisionType.fp32
         useBuffers = false
@@ -106,6 +111,7 @@ struct TestParams
         order = cpy.order
         transA = cpy.transA
         transB = cpy.transB
+        uplo = cpy.uplo
         function = cpy.function
         prec = cpy.prec
         
@@ -203,6 +209,15 @@ struct TestParams
         return .NoTranspose
     }
 
+    func parseUplo(s: String) -> UploType
+    {
+        if s == "U" || s == "u" || s == "Upper"
+        {
+            return .FillUpper
+        }
+        return .FillLower
+    }
+
     mutating func set(_ header: String, _ value: String)
     {
         switch header
@@ -243,6 +258,8 @@ struct TestParams
             self.transA = parseTrans(s: value)
         case "transB", "transposeB":
             self.transB = parseTrans(s: value)
+        case "uplo", "fill":
+            self.uplo = parseUplo(s: value)
         case "useBuf":
             self.useBuffers = Bool(value) ?? false
         case "coldIters", "j":

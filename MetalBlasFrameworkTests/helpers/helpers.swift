@@ -29,6 +29,16 @@ public func cblasTrans(_ transA: TransposeType) -> CBLAS_TRANSPOSE
     return CblasConjTrans
 }
 
+public func cblasUplo(_ uplo: UploType) -> CBLAS_UPLO
+{
+    if uplo == .FillLower
+    {
+        return CblasLower
+    }
+
+    return CblasUpper
+}
+
 public func printIfNotEqual<T: Numeric>(_ outMetal: [ T ], _ outRef: [ T ], _ pr: Bool = true, _ prNote: String = "") -> Bool
 {
     if outMetal.count != outRef.count

@@ -24,8 +24,6 @@ public func refHgbmv(_ order: OrderType, _ transA: TransposeType, _ M: Int, _ N:
         return
     }
 
-    let dim1 = transA == .NoTranspose ? M : N
-
     if(transA == .NoTranspose)
     {
         for row in 0..<M

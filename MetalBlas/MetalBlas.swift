@@ -20,6 +20,12 @@ public enum TransposeType: UInt32
     case ConjTranspose
 }
 
+public enum UploType: UInt32
+{
+    case FillUpper
+    case FillLower
+}
+
 public enum StorageMethod
 {
     case ColMajor
@@ -113,6 +119,8 @@ public class MetalBlas
                 "sgemv": try device.makeComputePipelineState(function: self.library.makeFunction(name: "metalSgemv")!),
                 "hger": try device.makeComputePipelineState(function: self.library.makeFunction(name: "metalHger")!),
                 "sger": try device.makeComputePipelineState(function: self.library.makeFunction(name: "metalSger")!),
+                "hsbmv": try device.makeComputePipelineState(function: self.library.makeFunction(name: "metalHsbmv")!),
+                "ssbmv": try device.makeComputePipelineState(function: self.library.makeFunction(name: "metalSsbmv")!),
 
                 // Level 3
                 "hgemm": try device.makeComputePipelineState(function: self.library.makeFunction(name: "metalHgemm")!),
