@@ -74,6 +74,8 @@
 				blas2/metalGer.swift,
 				blas2/metalSbmv.metal,
 				blas2/metalSbmv.swift,
+				blas2/metalSpmv.metal,
+				blas2/metalSpmv.swift,
 				blas3/metalGemm.metal,
 				blas3/metalGemm.swift,
 				MetalBlas.metal,
