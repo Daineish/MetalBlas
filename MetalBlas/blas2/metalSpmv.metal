@@ -25,7 +25,7 @@ kernel void metalSpmvWork(const device OrderType& order [[buffer(0)]],
     if(N == 0 || (alpha == 0 && beta == 1))
         return;
 
-    if(gid > uint(N))
+    if(gid >= uint(N))
         return;
 
     T sum = 0;

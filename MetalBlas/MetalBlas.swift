@@ -123,6 +123,8 @@ public class MetalBlas
                 "ssbmv": try device.makeComputePipelineState(function: self.library.makeFunction(name: "metalSsbmv")!),
                 "hspmv": try device.makeComputePipelineState(function: self.library.makeFunction(name: "metalHspmv")!),
                 "sspmv": try device.makeComputePipelineState(function: self.library.makeFunction(name: "metalSspmv")!),
+                "hspr": try device.makeComputePipelineState(function: self.library.makeFunction(name: "metalHspr")!),
+                "sspr": try device.makeComputePipelineState(function: self.library.makeFunction(name: "metalSspr")!),
 
                 // Level 3
                 "hgemm": try device.makeComputePipelineState(function: self.library.makeFunction(name: "metalHgemm")!),
