@@ -17,7 +17,7 @@ public extension MetalBlas
             var bufferA = device.makeBuffer(bytes: matA, length: MemoryLayout<T>.stride * sizeA, options: [.storageModeManaged]),
             let bufferx = device.makeBuffer(bytes: vecx, length: MemoryLayout<T>.stride * sizex, options: [.storageModeManaged])
         else {
-            fatalError("Failed to create buffers for matrices in gemv")
+            fatalError("Failed to create buffers for matrices in spr")
         }
 
         metalXspr(order, uplo, N, alpha, bufferx, incx, &bufferA)

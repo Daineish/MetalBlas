@@ -19,7 +19,7 @@ public extension MetalBlas
             let bufferx = device.makeBuffer(bytes: vecx, length: MemoryLayout<T>.stride * sizex, options: [.storageModeManaged]),
             var buffery = device.makeBuffer(bytes: vecy, length: MemoryLayout<T>.stride * sizey, options: [.storageModeShared])
         else {
-            fatalError("Failed to create buffers for matrices in gemv")
+            fatalError("Failed to create buffers for matrices in gbmv")
         }
 
         metalXgbmv(order, trans, M, N, KL, KU, alpha, bufferA, lda, bufferx, incx, beta, &buffery, incy)

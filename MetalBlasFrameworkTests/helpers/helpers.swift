@@ -178,3 +178,26 @@ public func initRandomInt<T: BinaryFloatingPoint>(_ arr: inout [T], _ size: Int,
         arr.append(neg ? T(-val) : T(val))
     }
 }
+
+public func printVector<T: BinaryFloatingPoint>(_ arr: [T], _ N: Int, _ incx: Int)
+{
+    for i in 0..<N
+    {
+        print(arr[i], terminator: " ")
+    }
+    print("")
+}
+
+public func printMatrix<T: BinaryFloatingPoint>(_ arr: [[T]], _ M: Int, _ N: Int, _ lda: Int, _ order: OrderType)
+{
+    for i in 0..<M
+    {
+        for j in 0..<N
+        {
+            let idx = order == .ColMajor ? j * lda + i : i * lda + j
+            print(arr[idx], terminator: " ")
+        }
+        print("")
+    }
+
+}
