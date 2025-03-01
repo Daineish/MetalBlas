@@ -80,6 +80,8 @@
 				blas2/metalSpr.swift,
 				blas2/metalSpr2.metal,
 				blas2/metalSpr2.swift,
+				blas2/metalSymv.metal,
+				blas2/metalSymv.swift,
 				blas3/metalGemm.metal,
 				blas3/metalGemm.swift,
 				MetalBlas.metal,
