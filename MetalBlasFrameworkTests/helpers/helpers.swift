@@ -39,6 +39,16 @@ public func cblasUplo(_ uplo: UploType) -> CBLAS_UPLO
     return CblasUpper
 }
 
+public func cblasDiag(_ diag: DiagType) -> CBLAS_DIAG
+{
+    if diag == .Unit
+    {
+        return CblasUnit
+    }
+
+    return CblasNonUnit
+}
+
 public func printIfNotEqual<T: Numeric>(_ outMetal: [ T ], _ outRef: [ T ], _ pr: Bool = true, _ prNote: String = "") -> Bool
 {
     if outMetal.count != outRef.count
@@ -188,7 +198,7 @@ public func printVector<T: BinaryFloatingPoint>(_ arr: [T], _ N: Int, _ incx: In
     print("")
 }
 
-public func printMatrix<T: BinaryFloatingPoint>(_ arr: [[T]], _ M: Int, _ N: Int, _ lda: Int, _ order: OrderType)
+public func printMatrix<T: BinaryFloatingPoint>(_ arr: [T], _ M: Int, _ N: Int, _ lda: Int, _ order: OrderType)
 {
     for i in 0..<M
     {

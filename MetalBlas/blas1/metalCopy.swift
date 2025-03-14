@@ -26,7 +26,7 @@ public extension MetalBlas
         copyBufToArray(buffery, &vecy)
     }
 
-    private func metalXcopy<T: BinaryFloatingPoint>(_ type: T, _ N: Int, _ bufferx: MTLBuffer, _ incx: Int, _ buffery: inout MTLBuffer, _ incy: Int)
+    internal func metalXcopy<T: BinaryFloatingPoint>(_ type: T, _ N: Int, _ bufferx: MTLBuffer, _ incx: Int, _ buffery: inout MTLBuffer, _ incy: Int)
     {
         assert(T.self == Float.self || T.self == Float16.self)
 

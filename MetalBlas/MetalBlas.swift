@@ -26,6 +26,12 @@ public enum UploType: UInt32
     case FillLower
 }
 
+public enum DiagType: UInt32
+{
+    case NonUnit
+    case Unit
+}
+
 public enum StorageMethod
 {
     case ColMajor
@@ -133,6 +139,8 @@ public class MetalBlas
                 "ssyr": try device.makeComputePipelineState(function: self.library.makeFunction(name: "metalSsyr")!),
                 "hsyr2": try device.makeComputePipelineState(function: self.library.makeFunction(name: "metalHsyr2")!),
                 "ssyr2": try device.makeComputePipelineState(function: self.library.makeFunction(name: "metalSsyr2")!),
+                "htbmv": try device.makeComputePipelineState(function: self.library.makeFunction(name: "metalHtbmv")!),
+                "stbmv": try device.makeComputePipelineState(function: self.library.makeFunction(name: "metalStbmv")!),
 
                 // Level 3
                 "hgemm": try device.makeComputePipelineState(function: self.library.makeFunction(name: "metalHgemm")!),

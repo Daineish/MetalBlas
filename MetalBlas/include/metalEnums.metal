@@ -27,4 +27,10 @@ typedef enum UploType : uint32_t
     FillLower,
 } UploType;
 
+typedef enum DiagType : uint32_t
+{
+    NonUnit,
+    Unit
+} DiagType;
+
 #endif
