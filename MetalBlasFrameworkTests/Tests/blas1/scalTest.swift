@@ -40,7 +40,7 @@ class ScalFramework<T: BinaryFloatingPoint>
         if T.self == Float.self
         {
             xArrF = []
-            initRandom(&xArrF, sizeX)
+            initRandomVec(&xArrF, N, incx)
             if useBuffers
             {
                 xBuf = metalBlas.getDeviceBuffer(matA: xArrF, M: xArrF.count, [.storageModeManaged])!//.storageModePrivate)!
@@ -49,7 +49,7 @@ class ScalFramework<T: BinaryFloatingPoint>
         else if T.self == Double.self
         {
             xArrD = []
-            initRandom(&xArrD, sizeX)
+            initRandomVec(&xArrD, N, incx)
             if useBuffers
             {
                 xBuf = metalBlas.getDeviceBuffer(matA: xArrD, M: xArrD.count, [.storageModeManaged])!//.storageModePrivate)!
@@ -58,7 +58,7 @@ class ScalFramework<T: BinaryFloatingPoint>
         else if T.self == Float16.self
         {
             xArrH = []
-            initRandom(&xArrH, sizeX)
+            initRandomVec(&xArrH, N, incx)
             if useBuffers
             {
                 xBuf = metalBlas.getDeviceBuffer(matA: xArrH, M: xArrH.count, [.storageModeManaged])!//.storageModePrivate)!

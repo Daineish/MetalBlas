@@ -60,9 +60,9 @@ class GerFramework<T: BinaryFloatingPoint>
         if T.self == Float.self
         {
             aArrF = []; xArrF = []; yArrF = []
-            initRandomInt(&aArrF, sizeA)
-            initRandomInt(&xArrF, sizeX)
-            initRandomInt(&yArrF, sizeY)
+            initRandomMatrix(&aArrF, M, N, lda, order)
+            initRandomVec(&xArrF, M, incx)
+            initRandomVec(&yArrF, N, incy)
             if useBuffers
             {
                 aBuf = metalBlas.getDeviceBuffer(matA: aArrF, M: aArrF.count, [.storageModeManaged])!
@@ -73,9 +73,9 @@ class GerFramework<T: BinaryFloatingPoint>
         else if T.self == Double.self
         {
             aArrD = []; xArrD = []; yArrD = []
-            initRandomInt(&aArrD, sizeA)
-            initRandomInt(&xArrD, sizeX)
-            initRandomInt(&yArrD, sizeY)
+            initRandomMatrix(&aArrD, M, N, lda, order)
+            initRandomVec(&xArrD, M, incx)
+            initRandomVec(&yArrD, N, incy)
             if useBuffers
             {
                 aBuf = metalBlas.getDeviceBuffer(matA: aArrD, M: aArrD.count, [.storageModeManaged])!
@@ -86,9 +86,9 @@ class GerFramework<T: BinaryFloatingPoint>
         else if T.self == Float16.self
         {
             aArrH = []; xArrH = []; yArrH = []
-            initRandomInt(&aArrH, sizeA, (0...3))
-            initRandomInt(&xArrH, sizeX, (0...3))
-            initRandomInt(&yArrH, sizeY, (0...3))
+            initRandomMatrix(&aArrF, M, N, lda, order, (0...3))
+            initRandomVec(&xArrF, M, incx, (0...3))
+            initRandomVec(&yArrF, N, incy, (0...3))
 
             if useBuffers
             {

@@ -52,9 +52,9 @@ class RotmFramework<T: BinaryFloatingPoint>
         if T.self == Float.self
         {
             xArrF = []; yArrF = []; pF = []
-            initRandom(&xArrF, sizeX)
-            initRandom(&yArrF, sizeY)
-            initRandom(&pF, sizeP)
+            initRandomVec(&xArrF, N, incx)
+            initRandomVec(&yArrF, N, incy)
+            initRandomVec(&pF, sizeP, 1)
             pF[0] = flag
             if useBuffers
             {
@@ -66,9 +66,9 @@ class RotmFramework<T: BinaryFloatingPoint>
         else if T.self == Double.self
         {
             xArrD = []; yArrD = []; pD = []
-            initRandom(&xArrD, sizeX)
-            initRandom(&yArrD, sizeY)
-            initRandom(&pD, sizeP)
+            initRandomVec(&xArrD, N, incx)
+            initRandomVec(&yArrD, N, incy)
+            initRandomVec(&pD, sizeP, 1)
             pD[0] = Double(flag)
             if useBuffers
             {
@@ -80,11 +80,11 @@ class RotmFramework<T: BinaryFloatingPoint>
         else if T.self == Float16.self
         {
             xArrH = []; yArrH = []; pH = [0,0,0,0,0]
-            initRandom(&xArrH, sizeX, (1...5))
-            initRandom(&yArrH, sizeY, (1...5))
+            initRandomVec(&xArrH, N, incx, (1...5))
+            initRandomVec(&yArrH, N, incy, (1...5))
             // TODO: deal with precision issues
             var pI : [Int] = [0,0,0,0,0]
-            initRandom(&pI, sizeP, (1...10))
+            initRandomVec(&pI, sizeP, 1, (1...10))
             pH[1] = Float16(pI[1])
             pH[2] = Float16(pI[2])
             pH[3] = Float16(pI[3])

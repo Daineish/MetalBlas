@@ -53,8 +53,8 @@ class SprFramework<T: BinaryFloatingPoint>
         if T.self == Float.self
         {
             aArrF = []; xArrF = []
-            initRandomInt(&aArrF, sizeA)
-            initRandomInt(&xArrF, sizeX)
+            initRandomVec(&aArrF, sizeA, 1)
+            initRandomVec(&xArrF, N, incx)
 
             if useBuffers
             {
@@ -65,8 +65,8 @@ class SprFramework<T: BinaryFloatingPoint>
         else if T.self == Double.self
         {
             aArrD = []; xArrD = []
-            initRandomInt(&aArrD, sizeA)
-            initRandomInt(&xArrD, sizeX)
+            initRandomVec(&aArrD, sizeA, 1)
+            initRandomVec(&xArrD, N, incx)
             if useBuffers
             {
                 aBuf = metalBlas.getDeviceBuffer(matA: aArrD, M: aArrD.count, [.storageModeManaged])!
@@ -76,8 +76,8 @@ class SprFramework<T: BinaryFloatingPoint>
         else if T.self == Float16.self
         {
             aArrH = []; xArrH = []
-            initRandomInt(&aArrH, sizeA, (0...3))
-            initRandomInt(&xArrH, sizeX, (0...3))
+            initRandomVec(&aArrH, sizeA, 1, (0...3))
+            initRandomVec(&xArrH, N, incx, (0...3))
 
             if useBuffers
             {

@@ -88,6 +88,8 @@
 				blas2/metalSyr2.swift,
 				blas2/metalTbmv.metal,
 				blas2/metalTbmv.swift,
+				blas2/metalTbsv.metal,
+				blas2/metalTbsv.swift,
 				blas3/metalGemm.metal,
 				blas3/metalGemm.swift,
 				MetalBlas.metal,

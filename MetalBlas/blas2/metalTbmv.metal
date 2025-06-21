@@ -68,8 +68,9 @@ kernel void metalTbmvWork(const device OrderType& order [[buffer(0)]],
             }
         }
     }
-if(row < N && row >= 0)
-    x[row * incx] = sum;
+
+    if(row < N && row >= 0)
+        x[row * incx] = sum;
 }
 
 template [[host_name("metalHtbmv")]]

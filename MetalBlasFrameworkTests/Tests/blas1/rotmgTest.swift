@@ -43,9 +43,9 @@ class RotmgFramework<T: BinaryFloatingPoint>
         {
             pF = []
             d1F = 0; d2F = 0; b1F = 0; b2F = 0
-            initRandom(&d1F); initRandom(&d2F)
-            initRandom(&b1F); initRandom(&b2F)
-            initRandom(&pF, sizeP)
+            initRandomVal(&d1F); initRandomVal(&d2F)
+            initRandomVal(&b1F); initRandomVal(&b2F)
+            initRandomVec(&pF, sizeP, 1)
             pF[0] = flag
             if useBuffers
             {
@@ -60,9 +60,9 @@ class RotmgFramework<T: BinaryFloatingPoint>
         {
             pD = []
             d1D = 0; d2D = 0; b1D = 0; b2D = 0
-            initRandom(&d1D); initRandom(&d2D)
-            initRandom(&b1D); initRandom(&b2D)
-            initRandom(&pD, sizeP)
+            initRandomVal(&d1D); initRandomVal(&d2D)
+            initRandomVal(&b1D); initRandomVal(&b2D)
+            initRandomVec(&pD, sizeP, 1)
             pD[0] = Double(flag)
 
             if useBuffers
@@ -78,9 +78,9 @@ class RotmgFramework<T: BinaryFloatingPoint>
         {
             pH = []
             d1H = 0; d2H = 0; b1H = 0; b2H = 0
-            initRandom(&d1H); initRandom(&d2H)
-            initRandom(&b1H); initRandom(&b2H)
-            initRandom(&pH, sizeP)
+            initRandomVal(&d1H); initRandomVal(&d2H)
+            initRandomVal(&b1H); initRandomVal(&b2H)
+            initRandomVec(&pH, sizeP, 1)
             pH[0] = Float16(flag)
 
             if useBuffers

@@ -55,8 +55,8 @@ class SyrFramework<T: BinaryFloatingPoint>
         if T.self == Float.self
         {
             aArrF = []; xArrF = []
-            initRandomInt(&aArrF, sizeA)
-            initRandomInt(&xArrF, sizeX)
+            initRandomMatrix(&aArrF, N, N, lda, order)
+            initRandomVec(&xArrF, N, incx)
 
             if useBuffers
             {
@@ -67,8 +67,8 @@ class SyrFramework<T: BinaryFloatingPoint>
         else if T.self == Double.self
         {
             aArrD = []; xArrD = []
-            initRandomInt(&aArrD, sizeA)
-            initRandomInt(&xArrD, sizeX)
+            initRandomMatrix(&aArrD, N, N, lda, order)
+            initRandomVec(&xArrD, N, incx)
             if useBuffers
             {
                 aBuf = metalBlas.getDeviceBuffer(matA: aArrD, M: aArrD.count, [.storageModeManaged])!
@@ -78,8 +78,8 @@ class SyrFramework<T: BinaryFloatingPoint>
         else if T.self == Float16.self
         {
             aArrH = []; xArrH = []
-            initRandomInt(&aArrH, sizeA, (0...3))
-            initRandomInt(&xArrH, sizeX, (0...3))
+            initRandomMatrix(&aArrH, N, N, lda, order, (0...3))
+            initRandomVec(&xArrH, N, incx, (0...3))
 
             if useBuffers
             {

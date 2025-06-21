@@ -44,7 +44,7 @@ class AminFramework<T: Numeric>
         if T.self == Float.self
         {
             xArrF = []
-            initRandom(&xArrF, sizeX, (-64000...64000))
+            initRandomVec(&xArrF, N, incx, (-64000...64000))
             if useBuffers
             {
                 xBuf = metalBlas.getDeviceBuffer(matA: xArrF, M: xArrF.count, [.storageModeManaged])!//.storageModePrivate)!
@@ -53,7 +53,7 @@ class AminFramework<T: Numeric>
         else if T.self == Double.self
         {
             xArrD = []
-            initRandom(&xArrD, sizeX, (-64000...64000))
+            initRandomVec(&xArrD, N, incx, (-64000...64000))
             if useBuffers
             {
                 xBuf = metalBlas.getDeviceBuffer(matA: xArrD, M: xArrD.count, [.storageModeManaged])!//.storageModePrivate)!
@@ -62,7 +62,7 @@ class AminFramework<T: Numeric>
         else if T.self == Float16.self
         {
             xArrH = []
-            initRandom(&xArrH, sizeX, (-20000...20000))
+            initRandomVec(&xArrH, N, incx, (-20000...20000))
             if useBuffers
             {
                 xBuf = metalBlas.getDeviceBuffer(matA: xArrH, M: xArrH.count, [.storageModeManaged])!//.storageModePrivate)!

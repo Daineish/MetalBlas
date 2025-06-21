@@ -43,7 +43,7 @@ class Nrm2Framework<T: BinaryFloatingPoint>
             xArrF = []
             resF = [0]
             
-            initRandom(&xArrF, sizeX, (0...0.1))
+            initRandomVec(&xArrF, N, incx, (0...0.1), .FloatingPoint)
 
             if useBuffers
             {
@@ -56,7 +56,7 @@ class Nrm2Framework<T: BinaryFloatingPoint>
             xArrD = []
             resD = [0]
 
-            initRandom(&xArrD, sizeX, (0...0.1))
+            initRandomVec(&xArrD, N, incx, (0...0.1), .FloatingPoint)
             if useBuffers
             {
                 xBuf = metalBlas.getDeviceBuffer(matA: xArrD, M: xArrD.count, [.storageModeManaged])!//.storageModePrivate)!
@@ -68,7 +68,7 @@ class Nrm2Framework<T: BinaryFloatingPoint>
             xArrH = []
             resH = [0]
 
-            initRandom(&xArrH, sizeX, (0...0.1))
+            initRandomVec(&xArrH, N, incx, (0...0.1), .FloatingPoint)
             if useBuffers
             {
                 xBuf = metalBlas.getDeviceBuffer(matA: xArrH, M: xArrH.count, [.storageModeManaged])!//.storageModePrivate)!

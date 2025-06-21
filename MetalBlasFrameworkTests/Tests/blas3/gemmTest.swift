@@ -32,6 +32,7 @@ class GemmFramework<T: BinaryFloatingPoint>
 
     let transA : TransposeType
     let transB : TransposeType
+    let order : OrderType
 
     var aBuf : MTLBuffer!
     var bBuf : MTLBuffer!
@@ -55,6 +56,7 @@ class GemmFramework<T: BinaryFloatingPoint>
 
         transA = params.transA
         transB = params.transB
+        order = .ColMajor
 
         assert(transA == .NoTranspose && transB == .NoTranspose)
 
@@ -86,9 +88,9 @@ class GemmFramework<T: BinaryFloatingPoint>
         if T.self == Float.self
         {
             aMatF = []; bMatF = []; cMatF = []
-            initRandomInt(&aMatF, sizeA)
-            initRandomInt(&bMatF, sizeB)
-            initRandomInt(&cMatF, sizeC)
+            initRandomMatrix(&aMatF, M, K, lda, order)
+            initRandomMatrix(&bMatF, K, N, ldb, order)
+            initRandomMatrix(&cMatF, M, N, ldc, order)
             if useBuffers
             {
                 aBuf = metalBlas.getDeviceBuffer(matA: aMatF, M: aMatF.count, [.storageModeManaged])!//.storageModePrivate)!
@@ -99,9 +101,9 @@ class GemmFramework<T: BinaryFloatingPoint>
         else if T.self == Double.self
         {
             aMatD = []; bMatD = []; cMatD = []
-            initRandomInt(&aMatD, sizeA)
-            initRandomInt(&bMatD, sizeB)
-            initRandomInt(&cMatD, sizeC)
+            initRandomMatrix(&aMatD, M, K, lda, order)
+            initRandomMatrix(&bMatD, K, N, ldb, order)
+            initRandomMatrix(&cMatD, M, N, ldc, order)
             if useBuffers
             {
                 aBuf = metalBlas.getDeviceBuffer(matA: aMatD, M: aMatD.count, [.storageModeManaged])!//.storageModePrivate)!
@@ -112,9 +114,9 @@ class GemmFramework<T: BinaryFloatingPoint>
         else if T.self == Float16.self
         {
             aMatH = []; bMatH = []; cMatH = []
-            initRandomInt(&aMatH, sizeA)
-            initRandomInt(&bMatH, sizeB)
-            initRandomInt(&cMatH, sizeC)
+            initRandomMatrix(&aMatH, M, K, lda, order)
+            initRandomMatrix(&bMatH, K, N, ldb, order)
+            initRandomMatrix(&cMatH, M, N, ldc, order)
             if useBuffers
             {
                 aBuf = metalBlas.getDeviceBuffer(matA: aMatH, M: aMatH.count, [.storageModeManaged])!//.storageModePrivate)!

@@ -8,6 +8,8 @@
 #ifndef Metalenums_h
 #define Metalenums_h
 
+#define TBSV_BLOCK 32
+
 typedef enum OrderType : uint32_t
 {
     ColMajor  = 0,

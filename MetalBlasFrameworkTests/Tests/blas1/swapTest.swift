@@ -43,8 +43,8 @@ class SwapFramework<T: BinaryFloatingPoint>
         if T.self == Float.self
         {
             xArrF = []; yArrF = []
-            initRandom(&xArrF, sizeX)
-            initRandom(&yArrF, sizeY)
+            initRandomVec(&xArrF, N, incx)
+            initRandomVec(&yArrF, N, incy)
             if useBuffers
             {
                 xBuf = metalBlas.getDeviceBuffer(matA: xArrF, M: xArrF.count, [.storageModeManaged])!//.storageModePrivate)!
@@ -54,8 +54,8 @@ class SwapFramework<T: BinaryFloatingPoint>
         else if T.self == Double.self
         {
             xArrD = []; yArrD = []
-            initRandom(&xArrD, sizeX)
-            initRandom(&yArrD, sizeY)
+            initRandomVec(&xArrD, N, incx)
+            initRandomVec(&yArrD, N, incy)
             if useBuffers
             {
                 xBuf = metalBlas.getDeviceBuffer(matA: xArrD, M: xArrD.count, [.storageModeManaged])!//.storageModePrivate)!
@@ -65,8 +65,8 @@ class SwapFramework<T: BinaryFloatingPoint>
         else if T.self == Float16.self
         {
             xArrH = []; yArrH = []
-            initRandom(&xArrH, sizeX)
-            initRandom(&yArrH, sizeY)
+            initRandomVec(&xArrH, N, incx)
+            initRandomVec(&yArrH, N, incy)
             if useBuffers
             {
                 xBuf = metalBlas.getDeviceBuffer(matA: xArrH, M: xArrH.count, [.storageModeManaged])!//.storageModePrivate)!

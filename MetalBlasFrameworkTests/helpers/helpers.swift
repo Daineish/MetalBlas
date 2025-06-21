@@ -7,6 +7,13 @@
 
 import Accelerate
 
+public enum InitType
+{
+    case FloatingPoint
+    case Integer
+    case DiagDominant
+}
+
 public func cblasOrder(_ order: OrderType) -> CBLAS_ORDER
 {
     if order == .RowMajor
@@ -59,11 +66,12 @@ public func printIfNotEqual<T: Numeric>(_ outMetal: [ T ], _ outRef: [ T ], _ pr
 
     for i in 0...outMetal.count - 1
     {
+        print("ref[", i, "] = ", outRef[i], "; got out[", i, "] = ", outMetal[i])
         if outMetal[i] != outRef[i]
         {
             if pr
             {
-                print(prNote, "Error: ref[", i, " ] = ", outRef[i], "; got out[", i, "] = ", outMetal[i])
+                print(prNote, "Error: ref[", i, "] = ", outRef[i], "; got out[", i, "] = ", outMetal[i])
             }
             return false
         }
@@ -133,59 +141,87 @@ public func printIfNotNear<T: BinaryFloatingPoint>(_ outMetal: T, _ outRef: T, _
     return true
 }
 
-public func initRandom(_ arr: inout [Double], _ size: Int, _ range: ClosedRange<Double> = (0...10))
-{
-    for _ in 0...size - 1
-    {
-        let neg = Bool.random()
-        let val = Double.random(in: range)
-        arr.append(neg ? -val : val)
-    }
-}
-
-public func initRandom(_ arr: inout [Float], _ size: Int, _ range: ClosedRange<Float> = (0...10))
-{
-    for _ in 0...size - 1
-    {
-        let neg = Bool.random()
-        let val = Float.random(in: range)
-        arr.append(neg ? -val : val)
-    }
-}
-
-public func initRandom(_ arr: inout [Float16], _ size: Int, _ range: ClosedRange<Float16> = (0...10))
-{
-    for _ in 0..<size
-    {
-        let neg = Bool.random()
-        let val = Float16.random(in: range)
-        arr.append(neg ? -val : val)
-    }
-}
-
-public func initRandom(_ arr: inout [Int], _ size: Int, _ range: ClosedRange<Int> = (0...10))
-{
-    for _ in 0..<size
-    {
-        let neg = Bool.random()
-        let val = Int.random(in: range)
-        arr.append(neg ? -val : val)
-    }
-}
-
-public func initRandom<T: BinaryFloatingPoint>(_ v: inout T, _ range: ClosedRange<Float> = (0...10))
+public func initRandomVal<T: BinaryFloatingPoint>(_ val: inout T, _ range: ClosedRange<T> = (0...10), _ initType: InitType = .Integer)
+where T.RawSignificand: FixedWidthInteger
 {
     let neg = Bool.random()
-    v = T(neg ? -Float.random(in: range) : Float.random(in: range))
+    let tmp = (initType == .FloatingPoint) ? T(T.random(in: range))
+                                           : T(Int.random(in: (Int(range.lowerBound)...Int(range.upperBound))))
+    val = neg ? -tmp : tmp
 }
 
-public func initRandomInt<T: BinaryFloatingPoint>(_ arr: inout [T], _ size: Int, _ range: ClosedRange<Int> = (0...10))
+public func initRandomVec<T: BinaryFloatingPoint>(_ arr: inout [T], _ N: Int, _ inc: Int, _ range: ClosedRange<T> = (0...10), _ initType: InitType = .Integer)
+where T.RawSignificand: FixedWidthInteger
 {
+    // TODO: negative increments
+    for _ in 0..<(N * inc)
+    {
+        // initializing between increments so we check that we aren't clobbering that data
+        // Note: initTYpe == .DiagDomninant doesn't make sense in vector initialization, should handle this better
+        let neg = Bool.random()
+        let val = (initType == .FloatingPoint) ? T(T.random(in: range))
+                                               : T(Int.random(in: (Int(range.lowerBound)...Int(range.upperBound))))
+        arr.append(neg ? -val : val)
+    }
+}
+
+public func initRandomVec<T: SignedInteger>(_ arr: inout [T], _ N: Int, _ inc: Int, _ range: ClosedRange<Int> = (0...10), _ initType: InitType = .Integer)
+{
+    for _ in 0..<(N * inc)
+    {
+        let neg = Bool.random()
+        let val = T(Int.random(in: range))
+        arr.append(neg ? -val : val)
+    }
+}
+
+public func initRandomMatrix<T: BinaryFloatingPoint>(_ mat: inout [T], _ M: Int, _ N: Int, _ ld: Int, _ order: OrderType, _ range: ClosedRange<T> = (0...10), _ initType: InitType = .Integer, _ uplo: UploType = .FillLower)
+where T.RawSignificand: FixedWidthInteger
+{
+    let size = order == .ColMajor ? ld * N : ld * M
     for _ in 0..<size
     {
-        let neg : Bool = Bool.random()
-        let val = Int.random(in: range)
-        arr.append(neg ? T(-val) : T(val))
+        let neg = Bool.random()
+        let val = (initType == .FloatingPoint) ? T(T.random(in: range))
+                                               : T(Int.random(in: (Int(range.lowerBound)...Int(range.upperBound))))
+        mat.append(neg ? -val : val)
+    }
+
+    if(initType == .DiagDominant)
+    {
+        // Row-diagonally dominant, provides numerical stability for things like triangular solves
+        // For now DiagDominant implies a triangular matrix, so passing in uplo for this case
+        // TODO: transpose?
+        if uplo == .FillLower
+        {
+            for row in 0...M - 1
+            {
+                var sum : T = 0
+                if(row > 0)
+                {
+                    for col in 0...row - 1
+                    {
+                        sum += abs(order == .ColMajor ? mat[col * ld + row] : mat[row * ld + col])
+                    }
+                }
+                mat[row * ld + row] = sum == 0 ? 1 : sum * 2
+            }
+        }
+        else
+        {
+            for row in 0...M - 1
+            {
+                var sum : T = 0
+                if(row > 0)
+                {
+                    for col in row...N - 1
+                    {
+                        sum += abs(order == .ColMajor ? mat[col * ld + row] : mat[row * ld + col])
+                    }
+                }
+                mat[row * ld + row] = sum == 0 ? 1 : sum * 2
+            }
+        }
     }
 }
 

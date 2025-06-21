@@ -55,6 +55,8 @@ class GemvFramework<T: BinaryFloatingPoint>
 
         metalBlas = metalBlasIn!
 
+        let K : Int = transA == .NoTranspose ? N : M
+        let K2 : Int = transA == .NoTranspose ? M : N
         let sizeA : Int = order == .ColMajor ? N * lda : M * lda
         let sizeX : Int = transA == .NoTranspose ? N * incx : M * incx
         let sizeY : Int = transA == .NoTranspose ? M * incy : N * incy
@@ -65,9 +67,9 @@ class GemvFramework<T: BinaryFloatingPoint>
         if T.self == Float.self
         {
             aArrF = []; xArrF = []; yArrF = []
-            initRandomInt(&aArrF, sizeA)
-            initRandomInt(&xArrF, sizeX)
-            initRandomInt(&yArrF, sizeY)
+            initRandomMatrix(&aArrF, M, N, lda, order)
+            initRandomVec(&xArrF, K, incx)
+            initRandomVec(&yArrF, K2, incy)
             if useBuffers
             {
                 aBuf = metalBlas.getDeviceBuffer(matA: aArrF, M: aArrF.count, [.storageModeManaged])!
@@ -78,9 +80,9 @@ class GemvFramework<T: BinaryFloatingPoint>
         else if T.self == Double.self
         {
             aArrD = []; xArrD = []; yArrD = []
-            initRandomInt(&aArrD, sizeA)
-            initRandomInt(&xArrD, sizeX)
-            initRandomInt(&yArrD, sizeY)
+            initRandomMatrix(&aArrD, M, N, lda, order)
+            initRandomVec(&xArrD, K, incx)
+            initRandomVec(&yArrD, K2, incy)
             if useBuffers
             {
                 aBuf = metalBlas.getDeviceBuffer(matA: aArrD, M: aArrD.count, [.storageModeManaged])!
@@ -91,9 +93,9 @@ class GemvFramework<T: BinaryFloatingPoint>
         else if T.self == Float16.self
         {
             aArrH = []; xArrH = []; yArrH = []
-            initRandomInt(&aArrH, sizeA, (0...3))
-            initRandomInt(&xArrH, sizeX, (0...3))
-            initRandomInt(&yArrH, sizeY, (0...3))
+            initRandomMatrix(&aArrH, M, N, lda, order, (0...3))
+            initRandomVec(&xArrH, K, incx, (0...3))
+            initRandomVec(&yArrH, K2, incy, (0...3))
 
             if useBuffers
             {

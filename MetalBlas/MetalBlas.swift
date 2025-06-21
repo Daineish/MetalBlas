@@ -38,6 +38,12 @@ public enum StorageMethod
     case RowMajor
 }
 
+// Must be updated with metalEnums.metal
+enum KernelConstants
+{
+    static let TBSV_BLOCK = 32
+}
+
 public func reinterpret<T, U>(input: [T]) -> [U]
 {
     guard MemoryLayout<T>.stride == MemoryLayout<U>.stride else {
@@ -141,6 +147,8 @@ public class MetalBlas
                 "ssyr2": try device.makeComputePipelineState(function: self.library.makeFunction(name: "metalSsyr2")!),
                 "htbmv": try device.makeComputePipelineState(function: self.library.makeFunction(name: "metalHtbmv")!),
                 "stbmv": try device.makeComputePipelineState(function: self.library.makeFunction(name: "metalStbmv")!),
+                "htbsv": try device.makeComputePipelineState(function: self.library.makeFunction(name: "metalHtbsv")!),
+                "stbsv": try device.makeComputePipelineState(function: self.library.makeFunction(name: "metalStbsv")!),
 
                 // Level 3
                 "hgemm": try device.makeComputePipelineState(function: self.library.makeFunction(name: "metalHgemm")!),

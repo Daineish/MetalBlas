@@ -62,9 +62,9 @@ class Syr2Framework<T: BinaryFloatingPoint>
         if T.self == Float.self
         {
             aArrF = []; xArrF = []; yArrF = []
-            initRandomInt(&aArrF, sizeA)
-            initRandomInt(&xArrF, sizeX)
-            initRandomInt(&yArrF, sizeY)
+            initRandomMatrix(&aArrF, N, N, lda, order)
+            initRandomVec(&xArrF, N, incx)
+            initRandomVec(&yArrF, N, incy)
 
             if useBuffers
             {
@@ -76,9 +76,9 @@ class Syr2Framework<T: BinaryFloatingPoint>
         else if T.self == Double.self
         {
             aArrD = []; xArrD = []; yArrD = []
-            initRandomInt(&aArrD, sizeA)
-            initRandomInt(&xArrD, sizeX)
-            initRandomInt(&yArrD, sizeY)
+            initRandomMatrix(&aArrD, N, N, lda, order)
+            initRandomVec(&xArrD, N, incx)
+            initRandomVec(&yArrD, N, incy)
             if useBuffers
             {
                 aBuf = metalBlas.getDeviceBuffer(matA: aArrD, M: aArrD.count, [.storageModeManaged])!
@@ -89,9 +89,9 @@ class Syr2Framework<T: BinaryFloatingPoint>
         else if T.self == Float16.self
         {
             aArrH = []; xArrH = []; yArrH = []
-            initRandomInt(&aArrH, sizeA, (0...3))
-            initRandomInt(&xArrH, sizeX, (0...3))
-            initRandomInt(&yArrH, sizeY, (0...3))
+            initRandomMatrix(&aArrH, N, N, lda, order, (0...3))
+            initRandomVec(&xArrH, N, incx, (0...3))
+            initRandomVec(&yArrH, N, incy, (0...3))
 
             if useBuffers
             {

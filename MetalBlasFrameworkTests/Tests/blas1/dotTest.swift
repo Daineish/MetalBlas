@@ -51,8 +51,8 @@ class DotFramework<T: BinaryFloatingPoint>
             yArrF = []
             resF = [0]
             
-            initRandom(&xArrF, sizeX, (0...10))
-            initRandom(&yArrF, sizeY, (0...10))
+            initRandomVec(&xArrF, N, incx, (0...10))
+            initRandomVec(&yArrF, N, incy, (0...10))
 
             if useBuffers
             {
@@ -67,8 +67,8 @@ class DotFramework<T: BinaryFloatingPoint>
             yArrD = []
             resD = [0]
 
-            initRandom(&xArrD, sizeX, (0...10))
-            initRandom(&yArrD, sizeY, (0...10))
+            initRandomVec(&xArrD, N, incx, (0...10))
+            initRandomVec(&yArrD, N, incy, (0...10))
             if useBuffers
             {
                 xBuf = metalBlas.getDeviceBuffer(matA: xArrD, M: xArrD.count, [.storageModeManaged])!//.storageModePrivate)!
@@ -82,8 +82,8 @@ class DotFramework<T: BinaryFloatingPoint>
             yArrH = []
             resH = [0]
 
-            initRandom(&xArrH, sizeX, (0...10))
-            initRandom(&yArrH, sizeY, (0...10))
+            initRandomVec(&xArrH, N, incx, (0...10))
+            initRandomVec(&yArrH, N, incy, (0...10))
             if useBuffers
             {
                 xBuf = metalBlas.getDeviceBuffer(matA: xArrH, M: xArrH.count, [.storageModeManaged])!//.storageModePrivate)!
