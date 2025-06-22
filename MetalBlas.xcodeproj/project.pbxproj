@@ -90,6 +90,8 @@
 				blas2/metalTbmv.swift,
 				blas2/metalTbsv.metal,
 				blas2/metalTbsv.swift,
+				blas2/metalTpmv.metal,
+				blas2/metalTpmv.swift,
 				blas3/metalGemm.metal,
 				blas3/metalGemm.swift,
 				MetalBlas.metal,

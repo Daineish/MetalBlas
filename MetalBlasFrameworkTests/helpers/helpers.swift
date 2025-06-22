@@ -66,7 +66,6 @@ public func printIfNotEqual<T: Numeric>(_ outMetal: [ T ], _ outRef: [ T ], _ pr
 
     for i in 0...outMetal.count - 1
     {
-        print("ref[", i, "] = ", outRef[i], "; got out[", i, "] = ", outMetal[i])
         if outMetal[i] != outRef[i]
         {
             if pr
